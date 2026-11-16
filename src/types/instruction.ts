@@ -1,9 +1,11 @@
+// тип автора
 export interface AuthorShort {
   id: number
   username: string
   role: string
 }
 
+// тип шага
 export interface Step {
   id: number
   instruction_id: number
@@ -15,6 +17,7 @@ export interface Step {
   updated_at: string
 }
 
+// тип инструкции
 export interface Instruction {
   id: number
   title: string

@@ -20,7 +20,7 @@ async function handleRegister() {
   error.value = ''
   success.value = false
 
-  // Проверяем совпадение паролей
+  // проверяем совпадение паролей
   if (password.value !== passwordConfirm.value) {
     error.value = 'Пароли не совпадают'
     return
@@ -28,6 +28,7 @@ async function handleRegister() {
 
   isLoading.value = true
 
+  // отправляем данные на api
   try {
     await authApi.register({
       username: username.value.trim(),
@@ -42,6 +43,7 @@ async function handleRegister() {
     if (axios.isAxiosError(err)) {
       const responseData = err.response?.data
 
+      // если неверные данные
       if (Array.isArray(responseData?.detail)) {
         const emailError = responseData.detail.find((item: { loc?: string[] }) =>
           item.loc?.includes('email'),

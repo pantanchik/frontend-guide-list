@@ -11,14 +11,14 @@ onMounted(() => {
   store.fetchInstructions()
 })
 
-// Получаем список категорий из загруженных инструкций
+// получаем список категорий из загруженных инструкций
 const categories = computed(() => {
   const uniqueCategories = [...new Set(store.instructions.map((item) => item.category))]
 
   return ['Все', ...uniqueCategories]
 })
 
-// Фильтруем инструкции по поиску и категории
+// фильтруем инструкции по поиску и категории
 const filteredInstructions = computed(() => {
   return store.instructions.filter((instruction) => {
     const query = searchQuery.value.toLowerCase().trim()

@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// прокси к backend'у
 const http = axios.create({
   baseURL: '/api',
   withCredentials: true,
