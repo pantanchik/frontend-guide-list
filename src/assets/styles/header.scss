@@ -1,0 +1,148 @@
+.app-header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+/* Логотип */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #7665d8;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.logo-text {
+  font-size: 21px;
+  font-weight: 700;
+  color: #25213a;
+}
+
+/* Навигация */
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #686477;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.router-link-active {
+  color: #7665d8;
+}
+
+/* Кнопки */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.login-button,
+.register-button {
+  padding: 10px 18px;
+  border-radius: 9px;
+
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: background 0.2s;
+}
+
+.login-button {
+  color: #7665d8;
+}
+
+.login-button:hover {
+  background: #f3f0ff;
+}
+
+.register-button {
+  background: #7665d8;
+  color: #ffffff;
+}
+
+.register-button:hover {
+  background: #6553c5;
+}
+
+/* Адаптивность */
+
+@media (max-width: 700px) {
+  .header-container {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .header-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    padding-top: 10px;
+    border-top: 1px solid #eeeeee;
+  }
+}
+
+@media (max-width: 450px) {
+  .header-container {
+    padding: 12px 16px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  .login-button,
+  .register-button {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  .header-nav {
+    gap: 24px;
+  }
+}

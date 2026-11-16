@@ -1,0 +1,38 @@
+@use './variables' as *;
+
+// Центрирование содержимого
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Ограничение ширины контейнера
+
+@mixin container {
+  width: 100%;
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+// Адаптивность
+
+@mixin tablet {
+  @media (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+@mixin small-mobile {
+  @media (max-width: $small-mobile) {
+    @content;
+  }
+}
