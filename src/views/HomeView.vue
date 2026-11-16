@@ -60,8 +60,8 @@ const features = [
         </h1>
 
         <p class="hero-description">
-          Находи полезные инструкции, осваивай новые навыки
-          и создавай собственные руководства вместе с Guide List.
+          Находи полезные инструкции, осваивай новые навыки и создавай собственные руководства
+          вместе с Guide List.
         </p>
 
         <button class="primary-button" @click="goToCatalog">
@@ -80,23 +80,15 @@ const features = [
           <p>Найди инструкции по интересующей тебя теме.</p>
         </div>
 
-        <button class="text-button" @click="goToCatalog">
-          Весь каталог →
-        </button>
+        <button class="text-button" @click="goToCatalog">Весь каталог →</button>
       </div>
 
       <div class="categories-grid">
-        <article
-          v-for="category in categories"
-          :key="category.title"
-          class="category-card"
-        >
+        <article v-for="category in categories" :key="category.title" class="category-card">
           <div class="feature-icon">{{ category.icon }}</div>
           <h3>{{ category.title }}</h3>
           <p>{{ category.description }}</p>
-          <button class="card-link" @click="goToCatalog">
-            Смотреть инструкции →
-          </button>
+          <button class="card-link" @click="goToCatalog">Смотреть инструкции →</button>
         </article>
       </div>
     </section>
@@ -110,11 +102,7 @@ const features = [
       </div>
 
       <div class="features-grid">
-        <article
-          v-for="feature in features"
-          :key="feature.title"
-          class="feature-card"
-        >
+        <article v-for="feature in features" :key="feature.title" class="feature-card">
           <h3>{{ feature.title }}</h3>
           <p>{{ feature.description }}</p>
         </article>
@@ -124,13 +112,8 @@ const features = [
     <!-- Призыв к действию -->
     <section class="cta-section">
       <h2>Есть чем поделиться?</h2>
-      <p>
-        Создай собственную инструкцию и помоги другим
-        освоить что-то новое.
-      </p>
-      <button class="primary-button" @click="goToCatalog">
-        Исследовать Guide List →
-      </button>
+      <p>Создай собственную инструкцию и помоги другим освоить что-то новое.</p>
+      <button class="primary-button" @click="goToCatalog">Исследовать Guide List →</button>
     </section>
 
     <footer class="footer">
@@ -140,4 +123,4 @@ const features = [
   </div>
 </template>
 
-<style scoped src="../assets/styles/home.scss"></style>
+<style scoped lang="scss" src="../assets/styles/home.scss"></style>

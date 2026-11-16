@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useInstructionsStore } from '../stores/instructions'
@@ -14,9 +13,7 @@ onMounted(() => {
   <main class="catalog">
     <h1>Каталог инструкций</h1>
 
-    <p v-if="store.isLoading">
-      Загрузка инструкций...
-    </p>
+    <p v-if="store.isLoading">Загрузка инструкций...</p>
 
     <p v-else-if="store.error">
       {{ store.error }}
@@ -36,16 +33,12 @@ onMounted(() => {
 
         <p>Автор: {{ instruction.author.username }}</p>
 
-        <small>
-          Просмотров: {{ instruction.views_count }}
-        </small>
+        <small> Просмотров: {{ instruction.views_count }} </small>
       </article>
     </section>
 
-    <p v-else>
-      Инструкций пока нет.
-    </p>
+    <p v-else>Инструкций пока нет.</p>
   </main>
 </template>
 
-<style scoped src="../assets/styles/instructions.scss"></style>
+<style scoped lang="scss" src="../assets/styles/instructions.scss"></style>

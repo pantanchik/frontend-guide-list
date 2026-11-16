@@ -1,148 +1,176 @@
+@use './variables' as *;
+@use './mixins' as *;
+
 .app-header {
-  width: 100%;
-  background: #ffffff;
-  border-bottom: 1px solid #eeeeee;
   position: sticky;
   top: 0;
   z-index: 100;
+
+  width: 100%;
+
+  background: $surface;
+  border-bottom: 1px solid $border;
 }
 
 .header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 24px;
+  @include container;
+
+  min-height: 76px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: $spacing-xl;
 }
 
-/* Логотип */
+// Логотип
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  text-decoration: none;
+  gap: $spacing-sm;
+
+  flex-shrink: 0;
 }
 
 .logo-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  @include flex-center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 40px;
+  height: 40px;
 
-  background: #7665d8;
-  color: white;
+  border-radius: $radius-md;
+
+  background: $primary;
+  color: $surface;
+
   font-size: 22px;
   font-weight: 700;
 }
 
 .logo-text {
-  font-size: 21px;
+  color: $text;
+
+  font-size: $font-size-lg;
   font-weight: 700;
-  color: #25213a;
 }
 
-/* Навигация */
+// Навигация
 
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: $spacing-xl;
 }
 
 .nav-link {
-  text-decoration: none;
-  color: #686477;
-  font-size: 15px;
+  color: $text-secondary;
+
+  font-size: $font-size-sm;
   font-weight: 500;
-  transition: color 0.2s;
+
+  transition: color 0.2s ease;
+
+  &:hover,
+  &.router-link-active {
+    color: $primary;
+  }
 }
 
-.nav-link:hover,
-.nav-link.router-link-active {
-  color: #7665d8;
-}
-
-/* Кнопки */
+// Кнопки авторизации
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: $spacing-sm;
 }
 
 .login-button,
 .register-button {
-  padding: 10px 18px;
-  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  text-decoration: none;
-  font-size: 14px;
+  padding: 10px $spacing-md;
+
+  border-radius: $radius-md;
+
+  font-size: $font-size-sm;
   font-weight: 600;
 
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .login-button {
-  color: #7665d8;
-}
+  color: $primary;
 
-.login-button:hover {
-  background: #f3f0ff;
+  &:hover {
+    background: $background;
+  }
 }
 
 .register-button {
-  background: #7665d8;
-  color: #ffffff;
+  background: $primary;
+  color: $surface;
+
+  &:hover {
+    background: $primary-hover;
+  }
 }
 
-.register-button:hover {
-  background: #6553c5;
-}
+// Планшеты
 
-/* Адаптивность */
-
-@media (max-width: 700px) {
+@include tablet {
   .header-container {
+    gap: $spacing-md;
+  }
+
+  .header-nav {
+    gap: $spacing-md;
+  }
+}
+
+// Мобильные устройства
+
+@include mobile {
+  .header-container {
+    min-height: auto;
+    padding-top: $spacing-md;
+    padding-bottom: $spacing-md;
+
     flex-wrap: wrap;
-    gap: 15px;
+    gap: $spacing-md;
   }
 
   .header-nav {
     order: 3;
+
     width: 100%;
     justify-content: center;
-    padding-top: 10px;
-    border-top: 1px solid #eeeeee;
+
+    padding-top: $spacing-md;
+    border-top: 1px solid $border;
   }
 }
 
-@media (max-width: 450px) {
-  .header-container {
-    padding: 12px 16px;
-  }
+// Маленькие экраны
 
+@include small-mobile {
   .logo-text {
-    font-size: 18px;
+    font-size: $font-size-md;
   }
 
   .header-actions {
-    gap: 4px;
+    gap: $spacing-xs;
   }
 
   .login-button,
   .register-button {
-    padding: 9px 10px;
-    font-size: 12px;
+    padding: 8px 10px;
+    font-size: $font-size-xs;
   }
 
   .header-nav {
-    gap: 24px;
+    gap: $spacing-lg;
   }
 }
