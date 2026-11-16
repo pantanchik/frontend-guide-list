@@ -1,16 +1,346 @@
+@use './variables' as *;
+@use './mixins' as *;
+
 .catalog {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 32px 20px;
+  min-height: 100vh;
+  padding: $spacing-3xl 0 $spacing-4xl;
+
+  background: $surface;
 }
+
+.catalog-container {
+  @include container;
+}
+
+// Заголовок
+
+.catalog-heading {
+  margin-bottom: $spacing-2xl;
+
+  h1 {
+    margin: $spacing-md 0;
+    font-size: $font-size-2xl;
+    color: $text;
+    letter-spacing: -2px;
+  }
+
+  p {
+    max-width: 600px;
+    color: $text-secondary;
+    font-size: $font-size-md;
+    line-height: 1.6;
+  }
+}
+
+// Поиск
+
+.catalog-controls {
+  margin-bottom: $spacing-2xl;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  max-width: 600px;
+  padding: 0 $spacing-md;
+
+  border: 1px solid $border;
+  border-radius: $radius-md;
+
+  background: $surface;
+
+  transition: border-color 0.2s ease;
+
+  &:focus-within {
+    border-color: $primary;
+  }
+
+  input {
+    width: 100%;
+    padding: $spacing-md 0;
+
+    border: none;
+    outline: none;
+
+    color: $text;
+    font-size: $font-size-md;
+
+    &::placeholder {
+      color: $text-secondary;
+    }
+  }
+}
+
+.search-icon {
+  color: $text-secondary;
+  font-size: 24px;
+}
+
+// Фильтры категорий
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+
+  margin-top: $spacing-lg;
+}
+
+.category-filter {
+  padding: 9px $spacing-md;
+
+  border: 1px solid $border;
+  border-radius: $radius-xl;
+
+  background: $surface;
+  color: $text-secondary;
+
+  font-size: $font-size-sm;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $primary;
+    color: $primary;
+  }
+
+  &.active {
+    border-color: $primary;
+    background: $primary;
+    color: $surface;
+  }
+}
+
+// Результаты поиска
+
+.catalog-results {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: $spacing-lg;
+
+  h2 {
+    margin: 0;
+    font-size: $font-size-lg;
+  }
+
+  span {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+}
+
+// Сетка карточек
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-lg;
+}
+
+// Карточка инструкции
 
 .instruction-card {
-  padding: 20px;
-  margin-bottom: 16px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+
+  min-height: 230px;
+  padding: $spacing-lg;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background: $surface;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $primary;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(37, 33, 58, 0.06);
+  }
+
+  h3 {
+    margin: $spacing-lg 0 $spacing-sm;
+
+    color: $text;
+    font-size: $font-size-lg;
+    line-height: 1.4;
+  }
 }
 
-.instruction-card h2 {
-  margin-top: 0;
+.card-top,
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.card-category {
+  padding: 6px 10px;
+
+  border-radius: $radius-xl;
+
+  background: $background;
+  color: $primary;
+
+  font-size: $font-size-xs;
+  font-weight: 600;
+}
+
+.card-views {
+  color: $text-secondary;
+  font-size: $font-size-xs;
+}
+
+.card-description {
+  flex: 1;
+
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+.card-bottom {
+  padding-top: $spacing-md;
+  margin-top: $spacing-md;
+
+  border-top: 1px solid $border;
+}
+
+.card-author {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}
+
+.author-avatar {
+  @include flex-center;
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+
+  background: $background;
+  color: $primary;
+
+  font-size: $font-size-xs;
+  font-weight: 700;
+}
+
+.card-steps {
+  color: $text-secondary;
+  font-size: $font-size-xs;
+}
+
+// Загрузка, ошибка и пустой результат
+
+.catalog-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: $spacing-4xl $spacing-lg;
+
+  text-align: center;
+
+  h2 {
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-xl;
+  }
+
+  p {
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+}
+
+.loader {
+  width: 36px;
+  height: 36px;
+
+  border: 3px solid $border;
+  border-top-color: $primary;
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.retry-button {
+  padding: $spacing-sm $spacing-lg;
+
+  border: none;
+  border-radius: $radius-md;
+
+  background: $primary;
+  color: $surface;
+
+  font-weight: 600;
+
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: $primary-hover;
+  }
+}
+
+// Планшеты
+
+@include tablet {
+  .instructions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .catalog-heading h1 {
+    font-size: 48px;
+  }
+}
+
+// Телефоны
+
+@include mobile {
+  .catalog {
+    padding-top: $spacing-2xl;
+  }
+
+  .catalog-heading h1 {
+    font-size: 36px;
+    letter-spacing: -1px;
+  }
+
+  .instructions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-results {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+}
+
+// Маленькие телефоны
+
+@include small-mobile {
+  .catalog-heading h1 {
+    font-size: 30px;
+  }
+
+  .instruction-card {
+    padding: $spacing-md;
+  }
 }
