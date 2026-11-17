@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { authApi } from '../api/auth.api'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
+
+const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
@@ -18,7 +20,7 @@ async function handleLogin() {
 
   try {
     // отправляем email и пароль на backend
-    await authApi.login({
+    await authStore.login({
       email: email.value,
       password: password.value,
     })

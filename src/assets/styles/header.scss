@@ -8,14 +8,16 @@
 
   width: 100%;
 
-  background: $surface;
-  border-bottom: 1px solid $border;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid rgba(238, 238, 238, 0.9);
 }
 
 .header-container {
   @include container;
 
-  min-height: 76px;
+  min-height: 80px;
 
   display: flex;
   align-items: center;
@@ -28,31 +30,37 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: $spacing-sm;
-
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .logo-icon {
   @include flex-center;
 
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
 
-  border-radius: $radius-md;
+  border-radius: 13px;
 
-  background: $primary;
-  color: $surface;
+  background: linear-gradient(135deg, #8878ed, #6553c5);
+  color: white;
 
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 23px;
+  font-weight: 800;
+
+  box-shadow: 0 5px 14px rgba(118, 101, 216, 0.25);
 }
 
 .logo-text {
   color: $text;
 
-  font-size: $font-size-lg;
-  font-weight: 700;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.7px;
+
+  span {
+    color: $primary;
+  }
 }
 
 // Навигация
@@ -60,61 +68,147 @@
 .header-nav {
   display: flex;
   align-items: center;
-  gap: $spacing-xl;
+  gap: 8px;
 }
 
 .nav-link {
-  color: $text-secondary;
-
-  font-size: $font-size-sm;
-  font-weight: 500;
-
-  transition: color 0.2s ease;
-
-  &:hover,
-  &.router-link-active {
-    color: $primary;
-  }
-}
-
-// Кнопки авторизации
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-}
-
-.login-button,
-.register-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 10px $spacing-md;
+  padding: 10px 16px;
 
   border-radius: $radius-md;
 
+  color: $text-secondary;
   font-size: $font-size-sm;
   font-weight: 600;
 
   transition: all 0.2s ease;
-}
-
-.login-button {
-  color: $primary;
 
   &:hover {
+    color: $primary;
+    background: $background;
+  }
+
+  &.router-link-exact-active {
+    color: $primary;
+    background: rgba(118, 101, 216, 0.09);
+  }
+}
+
+// Правая часть
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.login-button,
+.register-button,
+.profile-button,
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 42px;
+  padding: 10px 16px;
+
+  border-radius: $radius-md;
+
+  font-family: $font-family;
+  font-size: $font-size-sm;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+// Войти
+
+.login-button {
+  color: $text;
+
+  &:hover {
+    color: $primary;
     background: $background;
   }
 }
 
+// Регистрация
+
 .register-button {
   background: $primary;
-  color: $surface;
+  color: white;
+
+  box-shadow: 0 4px 10px rgba(118, 101, 216, 0.18);
 
   &:hover {
     background: $primary-hover;
+    transform: translateY(-1px);
+  }
+}
+
+// Профиль
+
+.profile-button {
+  background: $background;
+  color: $text;
+
+  &:hover {
+    background: #eeebff;
+    color: $primary;
+  }
+}
+
+.user-avatar {
+  @include flex-center;
+
+  width: 25px;
+  height: 25px;
+
+  border-radius: 50%;
+
+  background: $primary;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.profile-text {
+  white-space: nowrap;
+}
+
+// Выход
+
+.logout-button {
+  border: 1px solid $border;
+  background: white;
+  color: $text-secondary;
+
+  &:hover {
+    border-color: #e8b8b8;
+    background: #fff5f5;
+    color: #d84c4c;
+  }
+}
+
+// Индикатор загрузки
+
+.header-loader {
+  width: 90px;
+  height: 34px;
+
+  border-radius: $radius-md;
+  background: #f0eef6;
+
+  animation: header-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes header-pulse {
+  50% {
+    opacity: 0.45;
   }
 }
 
@@ -126,7 +220,11 @@
   }
 
   .header-nav {
-    gap: $spacing-md;
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 10px;
   }
 }
 
@@ -144,11 +242,11 @@
 
   .header-nav {
     order: 3;
-
     width: 100%;
+
     justify-content: center;
 
-    padding-top: $spacing-md;
+    padding-top: $spacing-sm;
     border-top: 1px solid $border;
   }
 }
@@ -156,21 +254,35 @@
 // Маленькие экраны
 
 @include small-mobile {
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
   .logo-text {
-    font-size: $font-size-md;
+    font-size: 18px;
   }
 
   .header-actions {
-    gap: $spacing-xs;
+    gap: 4px;
   }
 
   .login-button,
-  .register-button {
+  .register-button,
+  .profile-button,
+  .logout-button {
+    min-height: 36px;
     padding: 8px 10px;
-    font-size: $font-size-xs;
+    font-size: 12px;
   }
 
   .header-nav {
-    gap: $spacing-lg;
+    gap: $spacing-sm;
+  }
+
+  .nav-link {
+    padding: 8px 10px;
+    font-size: 13px;
   }
 }
