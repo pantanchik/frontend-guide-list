@@ -1,16 +1,18 @@
-// COLORS
+// ЦВЕТА
 
-$primary: #7665d8;
-$primary-hover: #6553c5;
+$primary: #b8381f;
+$primary-hover: #982d19;
 
-$text: #25213a;
-$text-secondary: #888596;
+$text: #1f1b18;
+$text-secondary: #645c54;
 
-$background: #f7f5ff;
-$surface: #ffffff;
-$border: #eeeeee;
+$background: #ede7dc;
+$surface: #f8f5ef;
+$surface-raised: #fcfaf6;
 
-// SPACING
+$border: #d9d0c2;
+
+// ОТСТУПЫ
 
 $spacing-xs: 4px;
 $spacing-sm: 8px;
@@ -21,9 +23,11 @@ $spacing-2xl: 48px;
 $spacing-3xl: 64px;
 $spacing-4xl: 96px;
 
-// TYPOGRAPHY
+// ШРИФТЫ
 
 $font-family: 'Inter', Arial, sans-serif;
+$font-family-display: 'DM Serif Display', Georgia, serif;
+$font-family-mono: 'IBM Plex Mono', monospace;
 
 $font-size-xs: 12px;
 $font-size-sm: 14px;
@@ -32,18 +36,18 @@ $font-size-lg: 20px;
 $font-size-xl: 36px;
 $font-size-2xl: 64px;
 
-// BORDER RADIUS
+// РАДЬУСЫ БАРЬЕРА
 
-$radius-sm: 6px;
-$radius-md: 10px;
-$radius-lg: 16px;
-$radius-xl: 20px;
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
 
-// LAYOUT
+// РАСПОЛОЖЕНИЕ
 
 $container-width: 1200px;
 
-// BREAKPOINTS
+// РАЗМЕРЫ УСТРОЙСТВ
 
 $tablet: 1023px;
 $mobile: 767px;

@@ -16,38 +16,38 @@ async function handleLogout() {
     <div class="header-container">
       <!-- Логотип -->
       <RouterLink to="/" class="logo">
-        <span class="logo-icon">G</span>
-
-        <span class="logo-text"> Guide<span>List</span> </span>
+        <span class="logo-text">guide<span>list</span></span>
       </RouterLink>
 
       <!-- Навигация -->
       <nav class="header-nav">
-        <RouterLink to="/" class="nav-link"> Главная </RouterLink>
+        <RouterLink to="/" class="nav-link">
+          <span class="nav-number">01</span>
+          Главная
+        </RouterLink>
 
-        <RouterLink to="/instructions" class="nav-link"> Инструкции </RouterLink>
+        <RouterLink to="/instructions" class="nav-link">
+          <span class="nav-number">02</span>
+          Инструкции
+        </RouterLink>
       </nav>
 
       <div class="header-actions">
-        <!-- Пока проверка -->
+        <!-- Проверка -->
         <template v-if="!authStore.isInitialized">
           <div class="header-loader"></div>
         </template>
 
-        <!-- Авторизованный пользователь -->
+        <!-- Авторизованный -->
         <template v-else-if="authStore.isAuthenticated">
           <RouterLink to="/profile" class="profile-button">
-            <span class="user-avatar">
-              {{ authStore.user?.username.charAt(0).toUpperCase() }}
-            </span>
-
-            <span class="profile-text"> Мой профиль </span>
+            <span class="profile-text">Мой профиль</span>
           </RouterLink>
 
           <button class="logout-button" type="button" @click="handleLogout">Выйти</button>
         </template>
 
-        <!-- Неавторизованный пользователь -->
+        <!-- Неавторизованный -->
         <template v-else>
           <RouterLink to="/login" class="login-button"> Войти </RouterLink>
 

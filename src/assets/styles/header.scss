@@ -1,6 +1,8 @@
 @use './variables' as *;
 @use './mixins' as *;
 
+// основная шапка
+
 .app-header {
   position: sticky;
   top: 0;
@@ -8,99 +10,114 @@
 
   width: 100%;
 
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
+  background: rgba(248, 245, 239, 0.96);
+  backdrop-filter: blur(12px);
 
-  border-bottom: 1px solid rgba(238, 238, 238, 0.9);
+  border-bottom: 1px solid $border;
 }
+
+// основной контейнер
 
 .header-container {
   @include container;
 
-  min-height: 80px;
+  min-height: 88px;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
+
   gap: $spacing-xl;
 }
 
-// Логотип
+// логотип
 
 .logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.logo-icon {
-  @include flex-center;
-
-  width: 42px;
-  height: 42px;
-
-  border-radius: 13px;
-
-  background: linear-gradient(135deg, #8878ed, #6553c5);
-  color: white;
-
-  font-size: 23px;
-  font-weight: 800;
-
-  box-shadow: 0 5px 14px rgba(118, 101, 216, 0.25);
+  width: fit-content;
 }
 
 .logo-text {
   color: $text;
-
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: -0.7px;
+  font-family: $font-family-display;
+  font-size: 29px;
+  letter-spacing: -1px;
 
   span {
     color: $primary;
   }
 }
 
-// Навигация
+// навигация
 
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: $spacing-lg;
 }
 
 .nav-link {
-  padding: 10px 16px;
-
-  border-radius: $radius-md;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
 
   color: $text-secondary;
   font-size: $font-size-sm;
-  font-weight: 600;
+  font-weight: 500;
 
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 
   &:hover {
     color: $primary;
-    background: $background;
+  }
+
+  &::after {
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+    left: 0;
+    height: 1px;
+    background: $primary;
+    content: '';
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover::after,
+  &.router-link-exact-active::after {
+    transform: scaleX(1);
   }
 
   &.router-link-exact-active {
-    color: $primary;
-    background: rgba(118, 101, 216, 0.09);
+    color: $text;
+
+    .nav-number {
+      color: $primary;
+    }
   }
 }
 
-// Правая часть
+.nav-number {
+  color: inherit;
+  font-family: $font-family-mono;
+  font-size: inherit;
+  transition: color 0.2s ease;
+}
+
+// правая часть
 
 .header-actions {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+  gap: $spacing-md;
 }
+
+// общие стили кнопок
 
 .login-button,
 .register-button,
@@ -120,49 +137,60 @@
   font-size: $font-size-sm;
   font-weight: 600;
 
-  cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-// Войти
+// вход
 
 .login-button {
-  color: $text;
+  color: $text-secondary;
 
   &:hover {
     color: $primary;
+  }
+}
+
+// регистрация
+
+.register-button {
+  border: 1px solid $primary;
+
+  background: $primary;
+  color: $surface;
+
+  &:hover {
+    border-color: $primary-hover;
+    background: $primary-hover;
+    transform: translateY(-2px);
+  }
+
+  span {
+    font-size: 17px;
+  }
+}
+
+// профиль
+
+.profile-button {
+  border: 1px solid $border;
+
+  background: transparent;
+  color: $text;
+
+  &:hover {
+    border-color: $primary;
     background: $background;
   }
 }
 
-// Регистрация
-
-.register-button {
-  background: $primary;
-  color: white;
-
-  box-shadow: 0 4px 10px rgba(118, 101, 216, 0.18);
-
-  &:hover {
-    background: $primary-hover;
-    transform: translateY(-1px);
-  }
-}
-
-// Профиль
-
-.profile-button {
-  background: $background;
-  color: $text;
-
-  &:hover {
-    background: #eeebff;
-    color: $primary;
-  }
-}
-
 .user-avatar {
-  @include flex-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   width: 25px;
   height: 25px;
@@ -170,7 +198,7 @@
   border-radius: 50%;
 
   background: $primary;
-  color: white;
+  color: $surface;
 
   font-size: 12px;
   font-weight: 700;
@@ -180,28 +208,32 @@
   white-space: nowrap;
 }
 
-// Выход
+.action-arrow {
+  color: $primary;
+}
+
+// выход
 
 .logout-button {
-  border: 1px solid $border;
-  background: white;
+  border: 1px solid transparent;
+  background: transparent;
+
   color: $text-secondary;
 
   &:hover {
-    border-color: #e8b8b8;
-    background: #fff5f5;
-    color: #d84c4c;
+    border-color: $border;
+    color: $primary;
   }
 }
 
-// Индикатор загрузки
+// индикатор загрузки
 
 .header-loader {
-  width: 90px;
-  height: 34px;
+  width: 110px;
+  height: 38px;
 
-  border-radius: $radius-md;
-  background: #f0eef6;
+  border-radius: $radius-sm;
+  background: $background;
 
   animation: header-pulse 1.2s ease-in-out infinite;
 }
@@ -212,7 +244,7 @@
   }
 }
 
-// Планшеты
+// планшеты
 
 @include tablet {
   .header-container {
@@ -220,48 +252,57 @@
   }
 
   .header-nav {
-    gap: 2px;
+    gap: $spacing-md;
   }
 
   .nav-link {
-    padding: 10px;
+    gap: 5px;
+  }
+
+  .header-bottom {
+    padding-right: $spacing-lg;
+    padding-left: $spacing-lg;
   }
 }
 
-// Мобильные устройства
+// телефон
 
 @include mobile {
   .header-container {
     min-height: auto;
+
+    grid-template-columns: 1fr auto;
+    gap: $spacing-md;
+
     padding-top: $spacing-md;
     padding-bottom: $spacing-md;
-
-    flex-wrap: wrap;
-    gap: $spacing-md;
   }
 
   .header-nav {
-    order: 3;
-    width: 100%;
+    grid-column: 1 / -1;
+    grid-row: 2;
 
-    justify-content: center;
+    justify-content: flex-start;
 
     padding-top: $spacing-sm;
     border-top: 1px solid $border;
   }
-}
 
-// Маленькие экраны
-
-@include small-mobile {
-  .logo-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 20px;
+  .header-actions {
+    gap: $spacing-sm;
   }
 
+  .header-bottom {
+    padding-right: $spacing-md;
+    padding-left: $spacing-md;
+  }
+}
+
+// маленький экран
+
+@include small-mobile {
   .logo-text {
-    font-size: 18px;
+    font-size: 21px;
   }
 
   .header-actions {
@@ -273,16 +314,15 @@
   .profile-button,
   .logout-button {
     min-height: 36px;
-    padding: 8px 10px;
+    padding: 8px;
     font-size: 12px;
   }
 
   .header-nav {
-    gap: $spacing-sm;
+    gap: $spacing-lg;
   }
 
   .nav-link {
-    padding: 8px 10px;
     font-size: 13px;
   }
 }
