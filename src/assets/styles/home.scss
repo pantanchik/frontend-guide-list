@@ -1,45 +1,43 @@
 @use './variables' as *;
 @use './mixins' as *;
 
-.home {
-  min-height: 100vh;
-
-  color: $text;
-  background: $surface;
-}
-
-// Главный экран
+// главный экран
 
 .hero {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
-
   gap: $spacing-3xl;
+
+  min-height: 610px;
 
   padding: $spacing-4xl max(calc((100% - #{$container-width}) / 2), $spacing-lg);
 
   background: $background;
+  border-bottom: 1px solid $border;
 }
 
 .hero-content {
-  max-width: 600px;
+  max-width: 610px;
 }
 
-.hero-label,
-.section-label {
-  color: $primary;
+.hero-label {
+  display: inline-block;
 
+  color: $primary;
+  font-family: $font-family-mono;
   font-size: $font-size-xs;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .hero h1 {
   margin: $spacing-lg 0;
 
-  font-size: clamp(40px, 5vw, $font-size-2xl);
-  line-height: 1.08;
+  font-family: $font-family-display;
+  font-size: clamp(48px, 5.5vw, 76px);
+  font-weight: 400;
+  line-height: 1.05;
   letter-spacing: -2px;
 
   span {
@@ -48,16 +46,191 @@
 }
 
 .hero-description {
-  max-width: 520px;
+  max-width: 490px;
   margin-bottom: $spacing-xl;
 
   color: $text-secondary;
-
   font-size: $font-size-lg;
   line-height: 1.7;
 }
 
-// Основная кнопка
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.hero-note {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  margin-top: $spacing-2xl;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+}
+
+.hero-note-line {
+  width: 28px;
+  height: 1px;
+  background: $primary;
+}
+
+// карточка
+
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: $spacing-lg;
+}
+
+.guide-preview {
+  width: 100%;
+  max-width: 430px;
+  padding: $spacing-xl;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background: $surface;
+
+  box-shadow: 8px 8px 0 rgba(31, 27, 24, 0.05);
+
+  transform: rotate(1.5deg);
+  transition: transform 0.3s ease;
+}
+
+// движение карточки только на пк
+@media (hover: hover) and (pointer: fine) {
+  .guide-preview:hover {
+    transform: rotate(0deg) translateY(-6px);
+  }
+}
+
+.preview-top,
+.preview-footer,
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.preview-top {
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $border;
+}
+
+.guide-preview h2 {
+  margin: $spacing-xl 0 $spacing-sm;
+
+  font-family: $font-family-display;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.preview-description {
+  margin-bottom: $spacing-lg;
+
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+.preview-divider {
+  height: 1px;
+  margin: $spacing-lg 0;
+  background: $border;
+}
+
+.preview-step {
+  display: grid;
+  grid-template-columns: 30px 1fr 20px;
+  align-items: center;
+  gap: $spacing-sm;
+
+  padding: $spacing-md 0;
+
+  color: $text-secondary;
+  font-size: $font-size-sm;
+
+  border-bottom: 1px solid rgba(217, 208, 194, 0.6);
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.step-number {
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+}
+
+.completed {
+  color: $text;
+}
+
+.completed .step-number,
+.step-status {
+  color: $primary;
+}
+
+.step-status {
+  font-weight: 700;
+  text-align: center;
+}
+
+.preview-progress {
+  margin-top: $spacing-lg;
+}
+
+.progress-track {
+  height: 5px;
+  margin-top: $spacing-sm;
+
+  overflow: hidden;
+  border-radius: 10px;
+
+  background: $border;
+}
+
+.progress-value {
+  width: 66.66%;
+  height: 100%;
+  border-radius: inherit;
+  background: $primary;
+}
+
+.preview-footer {
+  margin-top: $spacing-xl;
+  padding-top: $spacing-md;
+
+  border-top: 1px solid $border;
+}
+
+.visual-index {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+// главная кнопка
 
 .primary-button {
   display: inline-flex;
@@ -83,183 +256,12 @@
   }
 }
 
-// Общие секции
-
-.section {
-  @include container;
-
-  padding-top: $spacing-4xl;
-  padding-bottom: $spacing-4xl;
-}
-
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-
-  gap: $spacing-lg;
-  margin-bottom: $spacing-2xl;
-
-  h2 {
-    margin: $spacing-sm 0;
-
-    font-size: $font-size-xl;
-    letter-spacing: -1px;
-  }
-
-  p {
-    margin: 0;
-    color: $text-secondary;
-  }
-}
-
-// Кнопки-ссылки
-
-.text-button,
-.card-link {
-  padding: 0;
-
-  border: none;
-  background: none;
-
-  color: $primary;
-  font-weight: 600;
-
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: $primary-hover;
-  }
-}
-
-// Категории
-
-.categories-grid,
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: $spacing-md;
-}
-
-.category-card {
-  padding: $spacing-lg;
-
-  border: 1px solid $border;
-  border-radius: $radius-lg;
-
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: $primary;
-    transform: translateY(-4px);
-  }
-
-  h3 {
-    margin: $spacing-lg 0 $spacing-sm;
-    font-size: $font-size-lg;
-  }
-
-  p {
-    color: $text-secondary;
-    font-size: $font-size-sm;
-    line-height: 1.6;
-  }
-}
-
-.category-icon,
-.feature-icon {
-  font-size: 32px;
-}
-
-.card-link {
-  margin-top: $spacing-sm;
-  font-size: $font-size-xs;
-}
-
-// Преимущества
-
-.features-section {
-  padding: $spacing-4xl $spacing-lg;
-
-  background: $background;
-}
-
-.centered {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.features-grid {
-  @include container;
-
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.feature-card {
-  padding: $spacing-xl;
-
-  border-radius: $radius-lg;
-  background: $surface;
-
-  h3 {
-    margin: $spacing-lg 0 $spacing-sm;
-    font-size: $font-size-lg;
-  }
-
-  p {
-    color: $text-secondary;
-    font-size: $font-size-sm;
-    line-height: 1.6;
-  }
-}
-
-// Призыв к действию
-
-.cta-section {
-  padding: $spacing-4xl $spacing-lg;
-
-  text-align: center;
-  background: $background;
-
-  h2 {
-    font-size: $font-size-xl;
-  }
-
-  p {
-    max-width: 500px;
-    margin: $spacing-md auto $spacing-lg;
-
-    color: $text-secondary;
-    line-height: 1.6;
-  }
-}
-
-// Подвал
-
-.footer {
-  @include container;
-
-  display: flex;
-  justify-content: space-between;
-
-  padding-top: $spacing-lg;
-  padding-bottom: $spacing-lg;
-
-  color: $text-secondary;
-  font-size: $font-size-xs;
-
-  strong {
-    color: $primary;
-  }
-}
-
-// Планшеты
+// планшеты
 
 @include tablet {
   .hero {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 0.85fr;
+    gap: $spacing-xl;
     padding: $spacing-3xl $spacing-lg;
   }
 
@@ -268,53 +270,46 @@
   }
 }
 
-// Мобильные устройства
+// телефоны
 
 @include mobile {
   .hero {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
     padding: $spacing-2xl $spacing-md;
   }
 
   .hero h1 {
-    font-size: 40px;
-    letter-spacing: -1px;
+    font-size: 48px;
   }
 
-  .hero-description {
-    font-size: $font-size-md;
+  .hero-visual {
+    padding: $spacing-md;
   }
 
-  .section {
-    padding-top: $spacing-3xl;
-    padding-bottom: $spacing-3xl;
+  .guide-preview {
+    max-width: 100%;
   }
 
-  .section-heading {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .features-section,
-  .cta-section {
-    padding: $spacing-3xl $spacing-md;
-  }
-
-  .categories-grid,
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer {
-    flex-direction: column;
-    gap: $spacing-sm;
+  .visual-index {
+    right: $spacing-md;
   }
 }
 
-// Маленькие экраны
+// маленькие экраны
 
 @include small-mobile {
   .hero h1 {
-    font-size: 34px;
+    font-size: 38px;
+    letter-spacing: -1px;
+  }
+
+  .guide-preview {
+    padding: $spacing-md;
+  }
+
+  .guide-preview h2 {
+    font-size: 27px;
   }
 
   .section-heading h2,

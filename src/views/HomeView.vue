@@ -47,80 +47,89 @@ const features = [
 </script>
 
 <template>
-  <div class="home">
-    <!-- Главный экран -->
-    <section class="hero">
-      <div class="hero-content">
-        <span class="hero-label">ПЛАТФОРМА ПОШАГОВЫХ ИНСТРУКЦИЙ</span>
+  <!-- Главный экран -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-label"> ПЛАТФОРМА ПОШАГОВЫХ ИНСТРУКЦИЙ </span>
 
-        <h1>
-          Учись.
-          <span>Создавай.</span>
-          Делись.
-        </h1>
+      <h1>
+        Любая задача.
+        <span>Понятно.</span>
+        По шагам.
+      </h1>
 
-        <p class="hero-description">
-          Находи полезные инструкции, осваивай новые навыки и создавай собственные руководства
-          вместе с Guide List.
-        </p>
+      <p class="hero-description">
+        Находи полезные инструкции, осваивай новые навыки и превращай сложные задачи в
+        последовательность простых действий.
+      </p>
 
+      <div class="hero-actions">
         <button class="primary-button" @click="goToCatalog">
-          Перейти к инструкциям
+          Найти инструкцию
           <span>→</span>
         </button>
       </div>
-    </section>
 
-    <!-- Категории -->
-    <section class="section">
-      <div class="section-heading">
-        <div>
-          <span class="section-label">ИССЛЕДУЙ</span>
-          <h2>Выбери направление</h2>
-          <p>Найди инструкции по интересующей тебя теме.</p>
+      <div class="hero-note">
+        <span class="hero-note-line"></span>
+        <span>Учись в собственном темпе</span>
+      </div>
+    </div>
+
+    <!-- Декоративная карточка инструкции -->
+    <div class="hero-visual">
+      <div class="guide-preview">
+        <div class="preview-top">
+          <span>ПРИМЕР РУКОВОДСТВА</span>
+          <span>№ 001</span>
         </div>
 
-        <button class="text-button" @click="goToCatalog">Весь каталог →</button>
+        <h2>Собери свой первый проект</h2>
+
+        <p class="preview-description">Последовательность действий от идеи до результата.</p>
+
+        <div class="preview-divider"></div>
+
+        <div class="preview-step completed">
+          <span class="step-number">01</span>
+          <span>Подготовь инструменты</span>
+          <span class="step-status">✓</span>
+        </div>
+
+        <div class="preview-step completed">
+          <span class="step-number">02</span>
+          <span>Изучи компоненты</span>
+          <span class="step-status">✓</span>
+        </div>
+
+        <div class="preview-step">
+          <span class="step-number">03</span>
+          <span>Приступи к сборке</span>
+          <span class="step-status">—</span>
+        </div>
+
+        <div class="preview-divider"></div>
+
+        <div class="preview-progress">
+          <div class="progress-info">
+            <span>ТВОЙ ПРОГРЕСС</span>
+            <span>2 / 3</span>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-value"></div>
+          </div>
+        </div>
+
+        <div class="preview-footer">
+          <span>GUIDE LIST</span>
+          <span>STEP BY STEP</span>
+        </div>
       </div>
 
-      <div class="categories-grid">
-        <article v-for="category in categories" :key="category.title" class="category-card">
-          <div class="feature-icon">{{ category.icon }}</div>
-          <h3>{{ category.title }}</h3>
-          <p>{{ category.description }}</p>
-          <button class="card-link" @click="goToCatalog">Смотреть инструкции →</button>
-        </article>
-      </div>
-    </section>
-
-    <!-- Преимущества -->
-    <section class="features-section">
-      <div class="section-heading centered">
-        <span class="section-label">ВОЗМОЖНОСТИ</span>
-        <h2>Всё для эффективного обучения</h2>
-        <p>Инструменты, которые помогают превращать знания в результат.</p>
-      </div>
-
-      <div class="features-grid">
-        <article v-for="feature in features" :key="feature.title" class="feature-card">
-          <h3>{{ feature.title }}</h3>
-          <p>{{ feature.description }}</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Призыв к действию -->
-    <section class="cta-section">
-      <h2>Есть чем поделиться?</h2>
-      <p>Создай собственную инструкцию и помоги другим освоить что-то новое.</p>
-      <button class="primary-button" @click="goToCatalog">Исследовать Guide List →</button>
-    </section>
-
-    <footer class="footer">
-      <strong>Guide List</strong>
-      <span>Учись. Создавай. Делись.</span>
-    </footer>
-  </div>
+      <span class="visual-index">FIG. 01 — HOW IT WORKS</span>
+    </div>
+  </section>
 </template>
 
 <style scoped lang="scss" src="../assets/styles/home.scss"></style>
