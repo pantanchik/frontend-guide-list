@@ -256,9 +256,277 @@
   }
 }
 
+// популярные инструкции
+
+.popular-section {
+  padding: $spacing-4xl max(calc((100% - #{$container-width}) / 2), $spacing-lg);
+
+  background: $surface;
+  border-bottom: 1px solid $border;
+}
+
+.popular-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: $spacing-xl;
+
+  margin-bottom: $spacing-2xl;
+}
+
+.popular-heading-content {
+  max-width: 650px;
+
+  .section-label {
+    color: $primary;
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  h2 {
+    margin: $spacing-md 0;
+    font-family: $font-family-display;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -1px;
+
+    span {
+      color: $primary;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: $text-secondary;
+    font-size: $font-size-md;
+    line-height: 1.6;
+  }
+}
+
+// карусель
+
+.popular-viewport {
+  width: 100%;
+  overflow: hidden;
+
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.popular-track {
+  display: flex;
+  width: max-content;
+
+  will-change: transform;
+}
+
+.popular-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: $spacing-md;
+
+  padding-right: $spacing-md;
+}
+
+// карточка инструкции
+
+.popular-card {
+  position: relative;
+
+  display: flex;
+  flex: 0 0 clamp(280px, 30vw, 360px);
+  flex-direction: column;
+  align-items: stretch;
+
+  min-height: 290px;
+  padding: $spacing-xl;
+
+  overflow: hidden;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background: $surface-raised;
+  color: $text;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.popular-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-sm;
+
+  margin-bottom: $spacing-xl;
+}
+
+.popular-category {
+  color: $primary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.popular-number {
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 11px;
+}
+
+.popular-card-title {
+  display: block;
+
+  margin-bottom: $spacing-md;
+
+  font-family: $font-family-display;
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.4px;
+}
+
+.popular-card-description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+
+  margin-bottom: $spacing-xl;
+
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  line-height: 1.65;
+}
+
+.popular-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-sm;
+
+  margin-top: auto;
+  padding-top: $spacing-md;
+
+  border-top: 1px solid $border;
+
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+}
+
+.popular-author {
+  overflow: hidden;
+
+  color: $text-secondary;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.popular-views {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  flex-shrink: 0;
+
+  color: $text;
+  font-size: 12px;
+
+  span {
+    color: $primary;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  // карусель во всю длину
+  .popular-viewport {
+    width: calc(100vw - $spacing-2xl * 2);
+    margin-left: calc(50% - 50vw + $spacing-2xl);
+  }
+
+  // выделение карточки при наведении мыши
+  .popular-card:hover {
+    border-color: $primary;
+    background: #fffdf9;
+    box-shadow: 0 5px 18px rgba(31, 27, 24, 0.07);
+  }
+}
+
+// нижняя строка блока
+
+.popular-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: $spacing-lg;
+  row-gap: $spacing-sm;
+  margin-top: $spacing-xl;
+  padding-top: $spacing-md;
+  border-top: 1px solid $border;
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.popular-catalog-link {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: $primary;
+  font-family: $font-family;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  transition: color 0.2s ease;
+
+  span {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    color: $primary-hover;
+  }
+}
+
+// сообщения загрузки и пустого списка
+
+.popular-message {
+  padding: $spacing-3xl $spacing-lg;
+
+  border: 1px dashed $border;
+  border-radius: $radius-lg;
+
+  color: $text-secondary;
+  text-align: center;
+}
+
 // планшеты
 
 @include tablet {
+  // главная
+
   .hero {
     grid-template-columns: 1fr 0.85fr;
     gap: $spacing-xl;
@@ -268,11 +536,23 @@
   .categories-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  // популярные инструкции
+
+  .popular-section {
+    padding: $spacing-3xl $spacing-lg;
+  }
+
+  .popular-card {
+    flex-basis: 320px;
+  }
 }
 
 // телефоны
 
 @include mobile {
+  // главная
+
   .hero {
     grid-template-columns: 1fr;
     gap: $spacing-xl;
@@ -294,11 +574,40 @@
   .visual-index {
     right: $spacing-md;
   }
+
+  // популярные инструкции
+
+  .popular-section {
+    padding: $spacing-3xl $spacing-md;
+  }
+
+  .popular-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  .popular-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .popular-card {
+    flex-basis: 285px;
+    min-height: 270px;
+    padding: $spacing-lg;
+  }
+
+  .popular-card-title {
+    font-size: 26px;
+  }
 }
 
 // маленькие экраны
 
 @include small-mobile {
+  // главная
+
   .hero h1 {
     font-size: 38px;
     letter-spacing: -1px;
@@ -320,5 +629,25 @@
   .category-card,
   .feature-card {
     padding: $spacing-md;
+  }
+
+  // популярные инструкции
+
+  .popular-section {
+    padding-right: $spacing-md;
+    padding-left: $spacing-md;
+  }
+
+  .popular-heading-content h2 {
+    font-size: 34px;
+  }
+
+  .popular-card {
+    flex-basis: 270px;
+    min-height: 260px;
+  }
+
+  .carousel-hint {
+    font-size: 9px;
   }
 }
