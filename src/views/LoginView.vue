@@ -91,7 +91,7 @@ async function handleLogin() {
 
             <h2>Вход в аккаунт</h2>
 
-            <p>Введите данные, чтобы продолжить работу.</p>
+            <p>Введите данные, чтобы продолжить работу</p>
           </div>
 
           <form class="login-form" @submit.prevent="handleLogin">

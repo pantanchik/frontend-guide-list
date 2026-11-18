@@ -146,7 +146,7 @@
 
 .login-card {
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   padding: $spacing-2xl;
 
   border: 1px solid $border;
@@ -163,7 +163,7 @@
 
   .form-label {
     display: inline-block;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-xs;
 
     color: $primary;
     font-family: $font-family-mono;
@@ -345,7 +345,7 @@
   }
 
   .intro-content h1 {
-    font-size: clamp(52px, 6vw, 68px);
+    font-size: clamp(48px, 5.5vw, 64px);
   }
 
   .login-panel {
@@ -353,7 +353,36 @@
   }
 
   .login-card {
-    padding: $spacing-xl;
+    max-width: 400px;
+    padding: $spacing-md $spacing-lg;
+  }
+
+  .login-heading {
+    margin-bottom: $spacing-md;
+
+    h2 {
+      font-size: 36px;
+    }
+  }
+
+  .login-form {
+    gap: $spacing-sm;
+  }
+
+  .form-group input {
+    min-height: 46px;
+    padding: 11px 12px;
+    font-size: $font-size-sm;
+  }
+
+  .login-submit {
+    min-height: 50px;
+    padding: 12px 40px;
+  }
+
+  .login-footer {
+    margin-top: $spacing-lg;
+    padding-top: $spacing-md;
   }
 
   .panel-note {
