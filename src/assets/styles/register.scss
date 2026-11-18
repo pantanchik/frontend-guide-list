@@ -1,8 +1,6 @@
 @use './variables' as *;
 @use './mixins' as *;
 
-// Основная страница
-
 :global(.app:has(.register-page)) {
   display: flex;
   flex-direction: column;
@@ -27,8 +25,6 @@
   background: $background;
 }
 
-// Общая композиция
-
 .register-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -38,7 +34,7 @@
   min-height: 0;
 }
 
-// Левая декоративная часть
+// левая часть
 
 .register-intro {
   position: relative;
@@ -135,7 +131,7 @@
   user-select: none;
 }
 
-// Правая часть
+// правая часть
 
 .register-panel {
   position: relative;
@@ -163,7 +159,7 @@
   box-shadow: 8px 8px 0 rgba(31, 27, 24, 0.04);
 }
 
-// Заголовок формы
+// заголовок формы
 
 .register-heading {
   margin-bottom: $spacing-xl;
@@ -197,7 +193,7 @@
   }
 }
 
-// Форма
+// форма
 
 .register-form {
   display: flex;
@@ -247,7 +243,7 @@
   }
 }
 
-// Ошибка
+// ошибка
 
 .form-error {
   margin: 0;
@@ -257,7 +253,7 @@
   line-height: 1.5;
 }
 
-// Кнопка регистрации
+// кнопка регистрации
 
 .register-submit {
   display: flex;
@@ -294,7 +290,7 @@
   }
 }
 
-// Нижняя часть формы
+// нижняя часть формы
 
 .register-footer {
   display: flex;
@@ -321,7 +317,7 @@
   }
 }
 
-// Успешная регистрация
+// успешная регистрация
 
 .register-success {
   text-align: center;
@@ -373,7 +369,7 @@
   font-size: 32px;
 }
 
-// Подпись внизу правой части
+// подпись внизу правой части
 
 .panel-note {
   position: absolute;
@@ -440,14 +436,14 @@
   }
 }
 
-// Мобильные устройства
+// мобильные устройства
 
 @include mobile {
   .register-layout {
     grid-template-columns: 1fr;
   }
 
-  // Скрываем декоративную левую часть
+  // скрываем декоративную левую часть
 
   .register-intro {
     display: none;
@@ -489,7 +485,7 @@
   }
 }
 
-// Маленькие экраны
+// маленькие экраны
 
 @include small-mobile {
   .register-panel {

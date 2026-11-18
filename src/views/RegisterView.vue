@@ -4,8 +4,10 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 import { authApi } from '../api/auth.api'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const username = ref('')
 const email = ref('')
@@ -14,11 +16,9 @@ const passwordConfirm = ref('')
 
 const isLoading = ref(false)
 const error = ref('')
-const success = ref(false)
 
 async function handleRegister() {
   error.value = ''
-  success.value = false
 
   // проверяем совпадение паролей
   if (password.value !== passwordConfirm.value) {
@@ -28,22 +28,28 @@ async function handleRegister() {
 
   isLoading.value = true
 
-  // отправляем данные на api
   try {
+    // создаем аккаунт
     await authApi.register({
       username: username.value.trim(),
       email: email.value.trim(),
       password: password.value,
     })
 
-    success.value = true
+    // авторизуем пользователя
+    await authStore.login({
+      email: email.value.trim(),
+      password: password.value,
+    })
+
+    // переход в профиль
+    await router.push('/profile')
   } catch (err) {
-    console.error('Ошибка регистрации:', err)
+    console.error('Ошибка регистрации или авторизации:', err)
 
     if (axios.isAxiosError(err)) {
       const responseData = err.response?.data
 
-      // если неверные данные
       if (Array.isArray(responseData?.detail)) {
         const emailError = responseData.detail.find((item: { loc?: string[] }) =>
           item.loc?.includes('email'),
@@ -65,10 +71,6 @@ async function handleRegister() {
   } finally {
     isLoading.value = false
   }
-}
-
-function goToLogin() {
-  router.push('/login')
 }
 </script>
 
@@ -108,100 +110,81 @@ function goToLogin() {
       <!-- Правая часть -->
       <section class="register-panel">
         <div class="register-card">
-          <template v-if="!success">
-            <div class="register-heading">
-              <span class="form-label">НОВАЯ ГЛАВА НАЧИНАЕТСЯ</span>
+          <div class="register-heading">
+            <span class="form-label">НОВАЯ ГЛАВА НАЧИНАЕТСЯ</span>
 
-              <h2>Создать аккаунт</h2>
+            <h2>Создать аккаунт</h2>
 
-              <p>Заполните данные, чтобы присоединиться к нам</p>
+            <p>Заполните данные, чтобы присоединиться к нам</p>
+          </div>
+
+          <form class="register-form" @submit.prevent="handleRegister">
+            <div class="form-group">
+              <label for="username">Имя пользователя</label>
+
+              <input
+                id="username"
+                v-model="username"
+                type="text"
+                placeholder="Например, student"
+                autocomplete="username"
+                required
+              />
             </div>
 
-            <form class="register-form" @submit.prevent="handleRegister">
-              <div class="form-group">
-                <label for="username">Имя пользователя</label>
+            <div class="form-group">
+              <label for="email">Электронная почта</label>
 
-                <input
-                  id="username"
-                  v-model="username"
-                  type="text"
-                  placeholder="Например, student"
-                  autocomplete="username"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="email">Электронная почта</label>
-
-                <input
-                  id="email"
-                  v-model="email"
-                  type="email"
-                  placeholder="example@mail.com"
-                  autocomplete="email"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="password">Пароль</label>
-
-                <input
-                  id="password"
-                  v-model="password"
-                  type="password"
-                  placeholder="Придумайте пароль"
-                  autocomplete="new-password"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="password-confirm">Повторите пароль</label>
-
-                <input
-                  id="password-confirm"
-                  v-model="passwordConfirm"
-                  type="password"
-                  placeholder="Повторите пароль"
-                  autocomplete="new-password"
-                  required
-                />
-              </div>
-
-              <p v-if="error" class="form-error">
-                {{ error }}
-              </p>
-
-              <button class="register-submit" type="submit" :disabled="isLoading">
-                {{ isLoading ? 'Регистрация...' : 'Создать аккаунт' }}
-              </button>
-            </form>
-
-            <div class="register-footer">
-              <span>Уже есть аккаунт?</span>
-              <RouterLink to="/login">Войти</RouterLink>
+              <input
+                id="email"
+                v-model="email"
+                type="email"
+                placeholder="example@mail.com"
+                autocomplete="email"
+                required
+              />
             </div>
-          </template>
 
-          <!-- Успешная регистрация -->
-          <div v-else class="register-success">
-            <span class="success-label">REGISTRATION COMPLETE</span>
+            <div class="form-group">
+              <label for="password">Пароль</label>
 
-            <div class="success-icon">✓</div>
+              <input
+                id="password"
+                v-model="password"
+                type="password"
+                placeholder="Придумайте пароль"
+                autocomplete="new-password"
+                required
+              />
+            </div>
 
-            <h2>Аккаунт создан!</h2>
+            <div class="form-group">
+              <label for="password-confirm">Повторите пароль</label>
 
-            <p>
-              Регистрация прошла успешно. Теперь можно перейти к авторизации и начать пользоваться
-              Guide List.
+              <input
+                id="password-confirm"
+                v-model="passwordConfirm"
+                type="password"
+                placeholder="Повторите пароль"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+
+            <p v-if="error" class="form-error">
+              {{ error }}
             </p>
 
-            <button class="register-submit" @click="goToLogin">Перейти ко входу</button>
+            <button class="register-submit" type="submit" :disabled="isLoading">
+              {{ isLoading ? 'Регистрация...' : 'Создать аккаунт' }}
+            </button>
+          </form>
+
+          <div class="register-footer">
+            <span>Уже есть аккаунт?</span>
+            <RouterLink to="/login">Войти</RouterLink>
           </div>
         </div>
-
         <div class="panel-note">
           <span>GUIDE LIST — YOUR PERSONAL HANDBOOK</span>
           <span>© 2026</span>
