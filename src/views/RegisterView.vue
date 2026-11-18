@@ -90,7 +90,7 @@ async function handleRegister() {
           <h1>
             Знания<br />
             становятся<br />
-            <span>ближе.</span>
+            <span>ближе</span>
           </h1>
 
           <p>
