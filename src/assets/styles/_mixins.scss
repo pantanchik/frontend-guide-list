@@ -1,6 +1,6 @@
 @use './variables' as *;
 
-// Центрирование содержимого
+// центрирование содержимого
 
 @mixin flex-center {
   display: flex;
@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-// Общий контейнер
+// общий контейнер
 
 @mixin container {
   width: 100%;
@@ -21,7 +21,14 @@
   }
 }
 
-// Планшеты
+// текстура бумаги
+@mixin paper-texture {
+  background-image: radial-gradient(rgba(31, 27, 24, 0.09) 0.5px, transparent 0.7px);
+
+  background-size: 5px 5px;
+}
+
+// планшеты
 
 @mixin tablet {
   @media (max-width: $tablet) {
@@ -29,7 +36,7 @@
   }
 }
 
-// Мобильные устройства
+// мобильные устройства
 
 @mixin mobile {
   @media (max-width: $mobile) {
@@ -37,7 +44,7 @@
   }
 }
 
-// Маленькие экраны
+// маленькие экраны
 
 @mixin small-mobile {
   @media (max-width: $small-mobile) {

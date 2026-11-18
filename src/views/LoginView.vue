@@ -53,52 +53,94 @@ async function handleLogin() {
 
 <template>
   <main class="login-page">
-    <div class="login-card">
-      <div class="login-heading">
-        <h1>С возвращением!</h1>
-        <p>Войдите в свой аккаунт Guide List</p>
-      </div>
-
-      <form class="login-form" @submit.prevent="handleLogin">
-        <div class="form-group">
-          <label for="email">Электронная почта</label>
-
-          <input
-            id="email"
-            v-model="email"
-            type="email"
-            placeholder="example@mail.com"
-            autocomplete="email"
-            required
-          />
+    <div class="login-layout">
+      <!-- Левая часть -->
+      <section class="login-intro">
+        <div class="intro-top">
+          <span class="intro-label">GUIDE LIST / AUTHENTICATION</span>
+          <span class="intro-number">01 — 02</span>
         </div>
 
-        <div class="form-group">
-          <label for="password">Пароль</label>
+        <div class="intro-content">
+          <span class="intro-index">ВАШИ ИНСТРУКЦИИ ЖДУТ</span>
 
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            placeholder="Введите пароль"
-            autocomplete="current-password"
-            required
-          />
+          <h1>
+            Продолжим<br />
+            с того же <span>места</span>
+          </h1>
+
+          <p>
+            Возвращайтесь к своим инструкциям, сохраняйте прогресс и открывайте для себя новые
+            способы решать повседневные задачи.
+          </p>
         </div>
 
-        <p v-if="error" class="form-error">
-          {{ error }}
-        </p>
+        <div class="intro-bottom">
+          <span>LEARN. FOLLOW. COMPLETE.</span>
+          <span>EST. 2026</span>
+        </div>
 
-        <button type="submit" class="login-submit" :disabled="isLoading">
-          {{ isLoading ? 'Входим...' : 'Войти' }}
-        </button>
-      </form>
+        <div class="intro-decoration">GL.</div>
+      </section>
 
-      <div class="login-footer">
-        <span>Ещё нет аккаунта?</span>
-        <RouterLink to="/register">Зарегистрироваться</RouterLink>
-      </div>
+      <!-- Правая часть -->
+      <section class="login-panel">
+        <div class="login-card">
+          <div class="login-heading">
+            <span class="form-label">СНОВА РАДЫ ВАС ВИДЕТЬ</span>
+
+            <h2>Вход в аккаунт</h2>
+
+            <p>Введите данные, чтобы продолжить работу.</p>
+          </div>
+
+          <form class="login-form" @submit.prevent="handleLogin">
+            <div class="form-group">
+              <label for="email">Электронная почта</label>
+
+              <input
+                id="email"
+                v-model="email"
+                type="email"
+                placeholder="example@mail.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Пароль</label>
+
+              <input
+                id="password"
+                v-model="password"
+                type="password"
+                placeholder="Введите пароль"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+
+            <p v-if="error" class="form-error">
+              {{ error }}
+            </p>
+
+            <button type="submit" class="login-submit" :disabled="isLoading">
+              <span>{{ isLoading ? 'Входим...' : 'Войти в аккаунт' }}</span>
+            </button>
+          </form>
+
+          <div class="login-footer">
+            <span>Ещё нет аккаунта?</span>
+            <RouterLink to="/register">Зарегистрироваться</RouterLink>
+          </div>
+        </div>
+
+        <div class="panel-note">
+          <span>GUIDE LIST — YOUR PERSONAL HANDBOOK</span>
+          <span>© 2026</span>
+        </div>
+      </section>
     </div>
   </main>
 </template>

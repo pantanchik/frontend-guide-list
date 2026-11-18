@@ -1,40 +1,195 @@
 @use './variables' as *;
 @use './mixins' as *;
 
+:global(.app:has(.login-page)) {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+}
+
+:global(.app:has(.login-page) > .app-header) {
+  flex: 0 0 auto;
+}
+
 .login-page {
-  min-height: calc(100vh - 80px);
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-height: 0;
+  height: auto;
+
+  overflow: hidden;
+  background: $background;
+}
+
+.login-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+// левая часть
+
+.login-intro {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-width: 0;
+  padding: $spacing-2xl $spacing-3xl;
+
+  overflow: hidden;
+
+  border-right: 1px solid $border;
+  background: $background;
+  @include paper-texture;
+}
+
+.intro-top,
+.intro-bottom {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-md;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.7px;
+}
+
+.intro-label {
+  color: $primary;
+}
+
+.intro-content {
+  position: relative;
+  z-index: 1;
+
+  max-width: 620px;
+  margin: auto 0;
+
+  .intro-index {
+    display: inline-block;
+    margin-bottom: $spacing-lg;
+
+    color: $primary;
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    letter-spacing: 1px;
+  }
+
+  h1 {
+    margin-bottom: $spacing-xl;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(58px, 6vw, 88px);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -2px;
+
+    span {
+      color: $primary;
+      font-style: italic;
+    }
+  }
+
+  p {
+    max-width: 440px;
+    margin: 0;
+
+    color: $text-secondary;
+    font-size: $font-size-md;
+    line-height: 1.8;
+  }
+}
+
+.intro-decoration {
+  position: absolute;
+  right: -35px;
+  bottom: 45px;
+
+  color: rgba(184, 56, 31, 0.045);
+  font-family: $font-family-display;
+  font-size: 240px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+// правая часть
+
+.login-panel {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-2xl $spacing-lg;
-  background: $background;
+
+  min-width: 0;
+  padding: $spacing-2xl;
+
+  background: $surface;
 }
 
 .login-card {
   width: 100%;
   max-width: 440px;
   padding: $spacing-2xl;
-  background: $surface;
+
   border: 1px solid $border;
-  border-radius: $radius-xl;
+  border-radius: $radius-lg;
+
+  background: $surface-raised;
+  box-shadow: 8px 8px 0 rgba(31, 27, 24, 0.04);
 }
 
-.login-heading {
-  margin-bottom: $spacing-xl;
-  text-align: center;
+// заголовок формы
 
-  h1 {
+.login-heading {
+  margin-bottom: $spacing-2xl;
+
+  .form-label {
+    display: inline-block;
+    margin-bottom: $spacing-md;
+
+    color: $primary;
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    letter-spacing: 0.8px;
+  }
+
+  h2 {
     margin-bottom: $spacing-sm;
+
     color: $text;
-    font-size: 32px;
-    font-weight: 700;
+    font-family: $font-family-display;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.1;
   }
 
   p {
+    margin: 0;
     color: $text-secondary;
     font-size: $font-size-sm;
+    line-height: 1.6;
   }
 }
+
+// форма
 
 .login-form {
   display: flex;
@@ -55,44 +210,79 @@
 
   input {
     width: 100%;
-    padding: 13px 14px;
+    min-height: 50px;
+    padding: 13px 15px;
+
     border: 1px solid $border;
     border-radius: $radius-md;
     outline: none;
+
+    background: $surface;
     color: $text;
+
     font-family: $font-family;
     font-size: $font-size-md;
-    transition: border-color 0.2s;
+
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
 
     &:focus {
       border-color: $primary;
+      box-shadow: 0 0 0 3px rgba(184, 56, 31, 0.08);
     }
 
     &::placeholder {
       color: $text-secondary;
+      opacity: 0.7;
     }
   }
 }
 
+// ошибка
+
 .form-error {
-  color: #e05252;
+  margin: 0;
+
+  color: #c0392b;
   font-size: $font-size-sm;
+  line-height: 1.5;
 }
 
+// кнопка входа
+
 .login-submit {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
-  padding: 14px;
-  border: none;
+  min-height: 54px;
+  padding: 14px 48px;
+
+  border: 1px solid $primary;
   border-radius: $radius-md;
+
   background: $primary;
-  color: white;
+  color: $surface;
+
   font-family: $font-family;
-  font-size: $font-size-md;
+  font-size: $font-size-sm;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+  span:first-child {
+    text-align: center;
+  }
 
   &:hover:not(:disabled) {
+    border-color: $primary-hover;
     background: $primary-hover;
   }
 
@@ -102,36 +292,182 @@
   }
 }
 
+// нижняя часть формы
+
 .login-footer {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 5px;
+
   margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+
+  border-top: 1px solid $border;
+
   color: $text-secondary;
   font-size: $font-size-sm;
 
   a {
     color: $primary;
     font-weight: 600;
-    text-decoration: none;
 
     &:hover {
+      color: $primary-hover;
       text-decoration: underline;
     }
   }
 }
 
-@media (max-width: 550px) {
-  .login-page {
-    padding: $spacing-xl $spacing-md;
+// подпись внизу правой части
+
+.panel-note {
+  position: absolute;
+  right: $spacing-2xl;
+  bottom: $spacing-lg;
+  left: $spacing-2xl;
+
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-sm;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 9px;
+  letter-spacing: 0.4px;
+}
+
+// планшеты
+
+@include tablet {
+  .login-intro {
+    padding: $spacing-xl;
+  }
+
+  .intro-content h1 {
+    font-size: clamp(52px, 6vw, 68px);
+  }
+
+  .login-panel {
+    padding: $spacing-lg;
   }
 
   .login-card {
-    padding: $spacing-xl $spacing-lg;
+    padding: $spacing-xl;
   }
 
-  .login-heading h1 {
-    font-size: 26px;
+  .panel-note {
+    right: $spacing-lg;
+    left: $spacing-lg;
+  }
+}
+
+// мобильные устройства
+
+@include mobile {
+  .login-page {
+    height: calc(100svh - 143px);
+  }
+
+  .login-layout {
+    grid-template-columns: 1fr;
+  }
+
+  // скрываем декоративную левую часть
+
+  .login-intro {
+    display: none;
+  }
+
+  .login-panel {
+    padding: $spacing-lg $spacing-md;
+
+    background: $background;
+    @include paper-texture;
+  }
+
+  .login-card {
+    max-width: 480px;
+    padding: $spacing-xl;
+    box-shadow: 5px 5px 0 rgba(31, 27, 24, 0.04);
+  }
+
+  .login-heading {
+    margin-bottom: $spacing-xl;
+
+    h2 {
+      font-size: 38px;
+    }
+  }
+
+  .panel-note {
+    display: none;
+  }
+}
+
+// маленькие экраны
+
+@include small-mobile {
+  .login-page {
+    height: calc(100svh - 128px);
+  }
+
+  .login-panel {
+    padding: $spacing-md;
+  }
+
+  .login-card {
+    padding: $spacing-lg;
+  }
+
+  .login-heading {
+    margin-bottom: $spacing-lg;
+
+    .form-label {
+      margin-bottom: $spacing-sm;
+      font-size: 9px;
+    }
+
+    h2 {
+      font-size: 32px;
+    }
+
+    p {
+      font-size: $font-size-xs;
+    }
+  }
+
+  .login-form {
+    gap: $spacing-md;
+  }
+
+  .form-group {
+    gap: 6px;
+
+    label {
+      font-size: $font-size-xs;
+    }
+
+    input {
+      min-height: 46px;
+      padding: 11px 12px;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .login-submit {
+    min-height: 48px;
+    padding: 12px 42px;
+    font-size: $font-size-sm;
+
+    .submit-arrow {
+      right: 14px;
+    }
+  }
+
+  .login-footer {
+    margin-top: $spacing-lg;
+    padding-top: $spacing-md;
+    font-size: $font-size-xs;
   }
 }
