@@ -107,112 +107,118 @@ async function refreshCatalog() {
 
 <template>
   <main class="catalog-page">
-    <div class="catalog-container">
-      <!-- Вступительная часть -->
-      <section class="catalog-intro">
-        <div class="catalog-heading">
-          <div class="catalog-eyebrow">
-            <span class="catalog-index">02 / LIBRARY</span>
-            <span class="catalog-eyebrow-line"></span>
-            <span>БИБЛИОТЕКА ИНСТРУКЦИЙ</span>
+    <!-- Верхняя часть страницы с общим фоном -->
+    <div class="catalog-top-background">
+      <div class="catalog-container">
+        <!-- Вступительная часть -->
+        <section class="catalog-intro">
+          <div class="catalog-heading">
+            <div class="catalog-eyebrow">
+              <span class="catalog-index">01 / LIBRARY</span>
+              <span class="catalog-eyebrow-line"></span>
+              <span>БИБЛИОТЕКА ИНСТРУКЦИЙ</span>
+            </div>
+
+            <h1>
+              Найди способ
+              <span>Сделай сам</span>
+            </h1>
+
+            <p>
+              Понятные руководства для повседневных задач. Выбирай инструкцию, следуй шагам и
+              двигайся к результату в собственном темпе.
+            </p>
           </div>
 
-          <h1>
-            Найди способ
-            <span>Сделай сам</span>
-          </h1>
+          <aside class="catalog-aside">
+            <span class="aside-label">GUIDE LIST / INDEX</span>
 
-          <p>
-            Понятные руководства для повседневных задач. Выбирай инструкцию, следуй шагам и двигайся
-            к результату в собственном темпе.
-          </p>
-        </div>
+            <div class="aside-number">
+              {{ String(store.instructions.length).padStart(2, '0') }}
+            </div>
 
-        <aside class="catalog-aside">
-          <span class="aside-label">GUIDE LIST / INDEX</span>
+            <span class="aside-description"> ИНСТРУКЦИЙ В БИБЛИОТЕКЕ </span>
 
-          <div class="aside-number">
-            {{ String(store.instructions.length).padStart(2, '0') }}
+            <div class="aside-decoration">
+              <span>FIND</span>
+              <span>FOLLOW</span>
+              <span>COMPLETE</span>
+            </div>
+          </aside>
+        </section>
+
+        <!-- Поиск и фильтры -->
+        <section class="catalog-toolbar">
+          <div class="catalog-search-row">
+            <label class="search-box">
+              <span class="visually-hidden">Поиск инструкций</span>
+
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.8" />
+                <path d="m16 16 5 5" />
+              </svg>
+
+              <input
+                v-model="searchQuery"
+                type="search"
+                placeholder="Что хочешь узнать или сделать?"
+              />
+
+              <button
+                v-if="searchQuery"
+                class="search-clear"
+                type="button"
+                aria-label="Очистить поиск"
+                @click="searchQuery = ''"
+              >
+                ×
+              </button>
+            </label>
+
+            <div class="catalog-sort">
+              <label for="catalog-sort">Сортировка</label>
+
+              <select id="catalog-sort" v-model="sortBy">
+                <option value="popular">Популярные</option>
+                <option value="newest">Сначала новые</option>
+              </select>
+            </div>
           </div>
 
-          <span class="aside-description"> ИНСТРУКЦИЙ В БИБЛИОТЕКЕ </span>
-
-          <div class="aside-decoration">
-            <span>FIND</span>
-            <span>FOLLOW</span>
-            <span>COMPLETE</span>
+          <div class="catalog-filter-heading">
+            <span>КАТЕГОРИИ</span>
+            <span>{{ categories.length - 1 }} РАЗДЕЛОВ</span>
           </div>
-        </aside>
-      </section>
 
-      <!-- Поиск и фильтры -->
-      <section class="catalog-toolbar">
-        <div class="catalog-search-row">
-          <label class="search-box">
-            <span class="visually-hidden">Поиск инструкций</span>
-
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="10.8" cy="10.8" r="6.8" />
-              <path d="m16 16 5 5" />
-            </svg>
-
-            <input
-              v-model="searchQuery"
-              type="search"
-              placeholder="Что хочешь узнать или сделать?"
-            />
-
+          <div class="categories-list">
             <button
-              v-if="searchQuery"
-              class="search-clear"
+              v-for="category in categories"
+              :key="category"
               type="button"
-              aria-label="Очистить поиск"
-              @click="searchQuery = ''"
+              class="category-filter"
+              :class="{ active: selectedCategory === category }"
+              :aria-pressed="selectedCategory === category"
+              @click="selectedCategory = category"
             >
-              ×
+              <span>{{ category }}</span>
+              <span class="category-count">
+                {{ categoryCounts[category] ?? 0 }}
+              </span>
             </button>
-          </label>
-
-          <div class="catalog-sort">
-            <label for="catalog-sort">Сортировка</label>
-
-            <select id="catalog-sort" v-model="sortBy">
-              <option value="popular">Популярные</option>
-              <option value="newest">Сначала новые</option>
-            </select>
           </div>
-        </div>
+        </section>
+      </div>
+    </div>
 
-        <div class="catalog-filter-heading">
-          <span>КАТЕГОРИИ</span>
-          <span>{{ categories.length - 1 }} РАЗДЕЛОВ</span>
-        </div>
-
-        <div class="categories-list">
-          <button
-            v-for="category in categories"
-            :key="category"
-            type="button"
-            class="category-filter"
-            :class="{ active: selectedCategory === category }"
-            :aria-pressed="selectedCategory === category"
-            @click="selectedCategory = category"
-          >
-            <span>{{ category }}</span>
-            <span class="category-count">
-              {{ categoryCounts[category] ?? 0 }}
-            </span>
-          </button>
-        </div>
-      </section>
-
+    <!-- Основное содержимое каталога -->
+    <div class="catalog-container">
       <!-- Загрузка -->
       <section
         v-if="store.isLoading && !store.instructions.length"
         class="catalog-state"
         aria-live="polite"
       >
-        <span class="state-index">01 / LOADING</span>
+        <span class="state-index">02 / LOADING</span>
         <div class="state-loader"></div>
         <h2>Собираем библиотеку</h2>
         <p>Загружаем доступные инструкции...</p>
@@ -237,7 +243,7 @@ async function refreshCatalog() {
       <template v-else>
         <section class="catalog-results-heading">
           <div>
-            <span class="results-label">03 / THE COLLECTION</span>
+            <span class="results-label">02 / THE COLLECTION</span>
             <h2>Все инструкции</h2>
           </div>
 
@@ -295,7 +301,7 @@ async function refreshCatalog() {
               />
 
               <div v-else class="visual-placeholder">
-                <span class="visual-label">GUIDE / 001</span>
+                <span class="visual-label">GUIDE</span>
 
                 <div class="visual-steps">
                   <span class="visual-big-number">
@@ -387,12 +393,6 @@ async function refreshCatalog() {
           </button>
         </section>
       </template>
-
-      <!-- Нижняя подпись -->
-      <footer class="catalog-footer">
-        <span>GUIDE LIST — YOUR PERSONAL HANDBOOK</span>
-        <span>END OF INDEX / 2026</span>
-      </footer>
     </div>
   </main>
 </template>

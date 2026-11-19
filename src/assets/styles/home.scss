@@ -14,6 +14,8 @@
   padding: $spacing-4xl max(calc((100% - #{$container-width}) / 2), $spacing-lg);
 
   background: $background;
+  @include paper-texture;
+
   border-bottom: 1px solid $border;
 }
 
