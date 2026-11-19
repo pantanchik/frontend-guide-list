@@ -17,7 +17,22 @@ export interface Step {
   updated_at: string
 }
 
-// тип инструкции
+// тип инструкции при запросе нескольких
+export interface Instructions {
+  id: number
+  title: string
+  description: string
+  category: string
+  tags: string | null
+  parent_id: number | null
+  views_count: number
+  completions_count: number
+  created_at: string
+  author: AuthorShort
+  steps_count: number
+}
+
+// тип инструкции при запросе определенной
 export interface Instruction {
   id: number
   title: string
@@ -28,7 +43,7 @@ export interface Instruction {
   views_count: number
   completions_count: number
   created_at: string
-  updated_at?: string
   author: AuthorShort
-  steps?: Step[]
+  updated_at: string
+  steps: Step[]
 }

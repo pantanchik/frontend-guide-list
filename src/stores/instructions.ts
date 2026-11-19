@@ -2,11 +2,11 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 import { instructionsApi } from '../api/instructions.api'
-import type { Instruction } from '../types/instruction'
+import type { Instructions } from '../types/instruction'
 
 // создание хранилища инструкций
 export const useInstructionsStore = defineStore('instructions', () => {
-  const instructions = ref<Instruction[]>([])
+  const instructions = ref<Instructions[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 

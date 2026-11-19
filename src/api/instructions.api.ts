@@ -1,5 +1,5 @@
 import http from './http'
-import type { Instruction } from '../types/instruction'
+import type { Instructions, Instruction } from '../types/instruction'
 
 // описание возможных фильтров для получения инструкций
 export interface InstructionFilters {
@@ -11,8 +11,8 @@ export interface InstructionFilters {
 
 export const instructionsApi = {
   // получает список инструкций
-  async getAll(filters: InstructionFilters = {}): Promise<Instruction[]> {
-    const response = await http.get<Instruction[]>('/v1/instructions/', {
+  async getAll(filters: InstructionFilters = {}): Promise<Instructions[]> {
+    const response = await http.get<Instructions[]>('/v1/instructions/', {
       params: filters,
     })
 

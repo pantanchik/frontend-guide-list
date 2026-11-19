@@ -115,8 +115,6 @@ async function refreshCatalog() {
           <div class="catalog-heading">
             <div class="catalog-eyebrow">
               <span class="catalog-index">01 / LIBRARY</span>
-              <span class="catalog-eyebrow-line"></span>
-              <span>БИБЛИОТЕКА ИНСТРУКЦИЙ</span>
             </div>
 
             <h1>
@@ -294,22 +292,16 @@ async function refreshCatalog() {
             </div>
 
             <div class="featured-visual">
-              <img
-                v-if="featuredInstruction.steps?.[0]?.image_url"
-                :src="featuredInstruction.steps[0].image_url"
-                :alt="`Иллюстрация: ${featuredInstruction.title}`"
-              />
-
-              <div v-else class="visual-placeholder">
+              <div class="visual-placeholder">
                 <span class="visual-label">GUIDE</span>
 
                 <div class="visual-steps">
                   <span class="visual-big-number">
-                    {{ String(featuredInstruction.steps?.length ?? 0).padStart(2, '0') }}
+                    {{ String(featuredInstruction.steps_count).padStart(2, '0') }}
                   </span>
 
                   <span class="visual-steps-label">
-                    {{ getStepsLabel(featuredInstruction.steps?.length ?? 0) }}
+                    {{ getStepsLabel(featuredInstruction.steps_count) }}
                   </span>
                 </div>
 
@@ -337,20 +329,14 @@ async function refreshCatalog() {
               </div>
 
               <div class="card-visual">
-                <img
-                  v-if="instruction.steps?.[0]?.image_url"
-                  :src="instruction.steps[0].image_url"
-                  :alt="`Иллюстрация: ${instruction.title}`"
-                />
-
-                <div v-else class="card-visual-placeholder">
+                <div class="card-visual-placeholder">
                   <div class="visual-steps">
                     <span class="card-visual-big-number">
-                      {{ String(instruction.steps?.length ?? 0).padStart(2, '0') }}
+                      {{ String(instruction.steps_count).padStart(2, '0') }}
                     </span>
 
                     <span class="visual-steps-label">
-                      {{ getStepsLabel(instruction.steps?.length ?? 0) }}
+                      {{ getStepsLabel(instruction.steps_count) }}
                     </span>
                   </div>
                   <small>GUIDE LIST</small>
