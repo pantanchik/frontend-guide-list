@@ -1,41 +1,138 @@
 @use './variables' as *;
 @use './mixins' as *;
 
-.catalog {
-  min-height: 100vh;
-  padding: $spacing-3xl 0 $spacing-4xl;
+// основная страница
 
-  background: $surface;
+.catalog-page {
+  min-height: 100vh;
+  padding: $spacing-3xl 0 $spacing-2xl;
+
+  background-color: $surface;
+  background-image: radial-gradient(rgba(31, 27, 24, 0.055) 0.5px, transparent 0.7px);
+  background-size: 6px 6px;
 }
 
 .catalog-container {
   @include container;
 }
 
-// Заголовок
+.catalog-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: end;
+  gap: $spacing-2xl;
+
+  padding-bottom: $spacing-3xl;
+
+  border-bottom: 1px solid $border;
+}
+
+.catalog-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  margin-bottom: $spacing-lg;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+  letter-spacing: 0.5px;
+}
+
+.catalog-index {
+  color: $primary;
+}
+
+.catalog-eyebrow-line {
+  width: 28px;
+  height: 1px;
+  background: $primary;
+}
 
 .catalog-heading {
-  margin-bottom: $spacing-2xl;
+  max-width: 760px;
 
   h1 {
-    margin: $spacing-md 0;
-    font-size: $font-size-2xl;
+    max-width: 760px;
+    margin-bottom: $spacing-lg;
+
     color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(52px, 6.2vw, 82px);
+    font-weight: 400;
+    line-height: 0.98;
     letter-spacing: -2px;
+
+    span {
+      display: block;
+      color: $primary;
+      font-style: italic;
+    }
   }
 
   p {
-    max-width: 600px;
+    max-width: 550px;
+    margin: 0;
+
     color: $text-secondary;
     font-size: $font-size-md;
-    line-height: 1.6;
+    line-height: 1.8;
   }
 }
 
-// Поиск
+// правая декоративная часть
 
-.catalog-controls {
-  margin-bottom: $spacing-2xl;
+.catalog-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: $spacing-md 0 $spacing-sm $spacing-lg;
+
+  border-left: 1px solid $border;
+}
+
+.aside-label,
+.aside-description,
+.aside-decoration {
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.aside-number {
+  margin: $spacing-sm 0;
+
+  color: $primary;
+  font-family: $font-family-display;
+  font-size: 76px;
+  line-height: 1;
+}
+
+.aside-decoration {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  margin-top: $spacing-xl;
+  color: rgba(100, 92, 84, 0.7);
+}
+
+// поиск и фильтры
+
+.catalog-toolbar {
+  padding: $spacing-xl 0;
+
+  border-bottom: 1px solid $border;
+}
+
+.catalog-search-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-lg;
 }
 
 .search-box {
@@ -43,63 +140,150 @@
   align-items: center;
   gap: $spacing-md;
 
-  max-width: 600px;
+  width: 100%;
+  max-width: 620px;
+  min-height: 58px;
   padding: 0 $spacing-md;
 
   border: 1px solid $border;
   border-radius: $radius-md;
 
-  background: $surface;
+  background: $surface-raised;
 
-  transition: border-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:focus-within {
     border-color: $primary;
+    box-shadow: 0 0 0 3px rgba(184, 56, 31, 0.07);
   }
 
   input {
     width: 100%;
-    padding: $spacing-md 0;
+    min-width: 0;
+    height: 56px;
 
     border: none;
     outline: none;
 
+    background: transparent;
     color: $text;
+
+    font-family: $font-family;
     font-size: $font-size-md;
 
     &::placeholder {
       color: $text-secondary;
+      opacity: 0.8;
     }
   }
 }
 
 .search-icon {
-  color: $text-secondary;
-  font-size: 24px;
+  flex: 0 0 22px;
+
+  width: 22px;
+  height: 22px;
+
+  stroke: $primary;
+  stroke-width: 1.7;
+  stroke-linecap: round;
 }
 
-// Фильтры категорий
+.search-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: $radius-sm;
+
+  background: transparent;
+  color: $text-secondary;
+
+  font-size: 24px;
+
+  &:hover {
+    background: $background;
+    color: $primary;
+  }
+}
+
+.catalog-sort {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  label {
+    color: $text-secondary;
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+  }
+
+  select {
+    min-height: 42px;
+    padding: 0 30px 0 10px;
+
+    border: 1px solid $border;
+    border-radius: $radius-md;
+
+    background: $surface;
+    color: $text;
+
+    font-family: $font-family;
+    font-size: $font-size-sm;
+    cursor: pointer;
+  }
+}
+
+// категории
+
+.catalog-filter-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-md;
+
+  margin-top: $spacing-xl;
+  margin-bottom: $spacing-md;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
 
 .categories-list {
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-sm;
-
-  margin-top: $spacing-lg;
 }
 
 .category-filter {
-  padding: 9px $spacing-md;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 42px;
+  padding: 8px 13px;
 
   border: 1px solid $border;
-  border-radius: $radius-xl;
+  border-radius: $radius-md;
 
-  background: $surface;
+  background: transparent;
   color: $text-secondary;
 
+  font-family: $font-family;
   font-size: $font-size-sm;
 
-  transition: all 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
 
   &:hover {
     border-color: $primary;
@@ -113,67 +297,296 @@
   }
 }
 
-// Результаты поиска
+.category-count {
+  font-family: $font-family-mono;
+  font-size: 11px;
+  opacity: 0.75;
+}
 
-.catalog-results {
+// заголовок результатов
+
+.catalog-results-heading {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
 
-  margin-bottom: $spacing-lg;
+  margin: $spacing-3xl 0 $spacing-xl;
 
   h2 {
-    margin: 0;
-    font-size: $font-size-lg;
+    margin: $spacing-sm 0 0;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(38px, 4vw, 54px);
+    font-weight: 400;
+    line-height: 1.05;
+
+    span {
+      color: $primary;
+    }
+  }
+}
+
+.results-label {
+  color: $primary;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+  letter-spacing: 0.5px;
+}
+
+.results-count {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-sm;
+
+  strong {
+    color: $text;
+    font-family: $font-family-display;
+    font-size: 34px;
+    font-weight: 400;
   }
 
   span {
     color: $text-secondary;
-    font-size: $font-size-sm;
+    font-family: $font-family-mono;
+    font-size: 10px;
   }
 }
 
-// Сетка карточек
+// большая карточка
+
+.featured-card {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+
+  min-height: 360px;
+  margin-bottom: $spacing-xl;
+
+  overflow: hidden;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background: $surface-raised;
+
+  &:hover {
+    border-color: rgba(184, 56, 31, 0.65);
+    box-shadow: 4px 4px 0 rgba(31, 27, 24, 0.04);
+  }
+}
+
+.featured-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-width: 0;
+  padding: $spacing-xl;
+}
+
+.featured-top,
+.featured-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.featured-category {
+  color: $primary;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.featured-number {
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+}
+
+.featured-main {
+  margin: $spacing-xl 0;
+
+  .featured-label {
+    color: $text-secondary;
+    font-family: $font-family-mono;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  h3 {
+    max-width: 540px;
+    margin: $spacing-md 0;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(34px, 3.5vw, 48px);
+    font-weight: 400;
+    line-height: 1.08;
+  }
+
+  p {
+    max-width: 480px;
+    margin: 0;
+
+    color: $text-secondary;
+    font-size: $font-size-md;
+    line-height: 1.7;
+  }
+}
+
+.featured-author,
+.card-author {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  min-width: 0;
+
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}
+
+.author-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+
+  border: 1px solid $border;
+  border-radius: 50%;
+
+  background: $background;
+  color: $primary;
+
+  font-family: $font-family-display;
+  font-size: 17px;
+}
+
+.featured-meta,
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: $spacing-md;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+}
+
+.featured-visual {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+
+  background: $background;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    object-fit: cover;
+  }
+}
+
+.visual-placeholder {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: $spacing-xl;
+
+  background-color: $background;
+  background-image: radial-gradient(rgba(31, 27, 24, 0.08) 0.5px, transparent 0.7px);
+  background-size: 6px 6px;
+}
+
+.visual-label,
+.visual-bottom {
+  display: flex;
+  justify-content: space-between;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.visual-big-number {
+  color: $primary;
+  font-family: $font-family-display;
+  font-size: clamp(140px, 18vw, 230px);
+  line-height: 0.9;
+  letter-spacing: -8px;
+}
+
+.visual-steps {
+  display: flex;
+  align-items: baseline;
+  font-size: 84px;
+  gap: 8px;
+}
+
+.visual-steps-label {
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+// остальные карточки
 
 .instructions-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: $spacing-lg;
 }
-
-// Карточка инструкции
 
 .instruction-card {
   display: flex;
   flex-direction: column;
 
-  min-height: 230px;
+  min-width: 0;
+  min-height: 390px;
   padding: $spacing-lg;
 
   border: 1px solid $border;
   border-radius: $radius-lg;
 
-  background: $surface;
+  background: $surface-raised;
 
-  transition: all 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
-    border-color: $primary;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(37, 33, 58, 0.06);
+    border-color: rgba(184, 56, 31, 0.65);
+    box-shadow: 4px 4px 0 rgba(31, 27, 24, 0.04);
   }
 
   h3 {
     margin: $spacing-lg 0 $spacing-sm;
 
     color: $text;
-    font-size: $font-size-lg;
-    line-height: 1.4;
+    font-family: $font-family-display;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1.15;
   }
 }
 
-.card-top,
-.card-bottom {
+.card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -181,114 +594,170 @@
 }
 
 .card-category {
-  padding: 6px 10px;
-
-  border-radius: $radius-xl;
-
-  background: $background;
   color: $primary;
-
-  font-size: $font-size-xs;
-  font-weight: 600;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
-.card-views {
+.card-number {
   color: $text-secondary;
-  font-size: $font-size-xs;
+  font-family: $font-family-mono;
+  font-size: 11px;
+}
+
+.card-visual {
+  position: relative;
+
+  height: 150px;
+  margin-top: $spacing-lg;
+
+  overflow: hidden;
+
+  background: $background;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.card-visual-placeholder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  padding: $spacing-lg;
+
+  background-image: radial-gradient(rgba(31, 27, 24, 0.07) 0.5px, transparent 0.7px);
+  background-size: 6px 6px;
+
+  small {
+    color: $text-secondary;
+    font-family: $font-family-mono;
+    font-size: 10px;
+  }
+}
+
+.card-visual-big-number {
+  color: $primary;
+  font-family: $font-family-display;
+  line-height: 1;
 }
 
 .card-description {
   flex: 1;
 
+  margin-bottom: $spacing-lg;
+
   color: $text-secondary;
   font-size: $font-size-sm;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+
   padding-top: $spacing-md;
-  margin-top: $spacing-md;
 
   border-top: 1px solid $border;
 }
 
 .card-author {
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-
-  color: $text-secondary;
-  font-size: $font-size-sm;
-}
-
-.author-avatar {
-  @include flex-center;
-
-  width: 30px;
-  height: 30px;
-
-  border-radius: 50%;
-
-  background: $background;
-  color: $primary;
-
-  font-size: $font-size-xs;
-  font-weight: 700;
-}
-
-.card-steps {
-  color: $text-secondary;
   font-size: $font-size-xs;
 }
 
-// Загрузка, ошибка и пустой результат
+.card-author .author-mark {
+  flex-basis: 28px;
+  width: 28px;
+  height: 28px;
+  font-size: 15px;
+}
 
-.catalog-message {
+.card-meta {
+  gap: 8px;
+  font-size: 9px;
+}
+
+// состояния каталога
+
+.catalog-state {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  padding: $spacing-4xl $spacing-lg;
+  min-height: 300px;
+  padding: $spacing-3xl $spacing-lg;
 
   text-align: center;
 
   h2 {
-    margin-bottom: $spacing-sm;
-    font-size: $font-size-xl;
+    margin: $spacing-lg 0 $spacing-sm;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 400;
   }
 
   p {
+    max-width: 460px;
+    margin-bottom: $spacing-lg;
+
     color: $text-secondary;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 }
 
-.loader {
-  width: 36px;
-  height: 36px;
+.state-index {
+  color: $primary;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+}
 
-  border: 3px solid $border;
+.state-loader {
+  width: 34px;
+  height: 34px;
+  margin-top: $spacing-xl;
+
+  border: 2px solid $border;
   border-top-color: $primary;
   border-radius: 50%;
 
-  animation: spin 0.8s linear infinite;
+  animation: catalog-spin 0.8s linear infinite;
 }
 
-@keyframes spin {
+@keyframes catalog-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-.retry-button {
-  padding: $spacing-sm $spacing-lg;
+.catalog-action {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-md;
 
-  border: none;
+  min-height: 48px;
+  padding: 12px 18px;
+
+  border: 1px solid $primary;
   border-radius: $radius-md;
 
   background: $primary;
   color: $surface;
 
+  font-family: $font-family;
+  font-size: $font-size-sm;
   font-weight: 600;
 
   transition: background 0.2s ease;
@@ -298,49 +767,232 @@
   }
 }
 
-// Планшеты
+// нижняя подпись
+
+.catalog-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-md;
+
+  margin-top: $spacing-3xl;
+  padding-top: $spacing-lg;
+
+  border-top: 1px solid $border;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+}
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  border: 0;
+}
+
+// планшеты
 
 @include tablet {
-  .instructions-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .catalog-intro {
+    grid-template-columns: minmax(0, 1fr) 170px;
+    gap: $spacing-lg;
   }
 
   .catalog-heading h1 {
-    font-size: 48px;
+    font-size: clamp(48px, 6vw, 64px);
+  }
+
+  .aside-number {
+    font-size: 64px;
+  }
+
+  .featured-card {
+    grid-template-columns: 1fr 0.8fr;
+  }
+
+  .featured-content {
+    padding: $spacing-lg;
+  }
+
+  .featured-main h3 {
+    font-size: 36px;
+  }
+
+  .instructions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-// Телефоны
+// телефоны
 
 @include mobile {
-  .catalog {
+  .catalog-page {
     padding-top: $spacing-2xl;
   }
 
+  .catalog-intro {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+    padding-bottom: $spacing-xl;
+  }
+
   .catalog-heading h1 {
-    font-size: 36px;
-    letter-spacing: -1px;
+    font-size: clamp(44px, 10vw, 62px);
+    letter-spacing: -1.5px;
+  }
+
+  .catalog-aside {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: $spacing-sm;
+
+    padding: $spacing-md 0 0;
+
+    border-top: 1px solid $border;
+    border-left: none;
+  }
+
+  .aside-label {
+    grid-column: 1 / -1;
+  }
+
+  .aside-number {
+    margin: 0;
+    font-size: 48px;
+  }
+
+  .aside-description {
+    align-self: center;
+  }
+
+  .aside-decoration {
+    display: none;
+  }
+
+  .catalog-search-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search-box {
+    max-width: none;
+  }
+
+  .catalog-sort {
+    justify-content: space-between;
+
+    select {
+      flex: 1;
+      max-width: 220px;
+    }
+  }
+
+  .catalog-results-heading {
+    margin-top: $spacing-2xl;
+  }
+
+  .featured-card {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-content {
+    min-height: 330px;
+  }
+
+  .featured-visual {
+    min-height: 230px;
+
+    img {
+      min-height: 230px;
+    }
+  }
+
+  .visual-big-number {
+    font-size: 160px;
   }
 
   .instructions-grid {
     grid-template-columns: 1fr;
+    gap: $spacing-md;
   }
 
-  .catalog-results {
-    align-items: flex-start;
+  .instruction-card {
+    min-height: 360px;
+  }
+
+  .catalog-footer {
     flex-direction: column;
     gap: $spacing-sm;
   }
 }
 
-// Маленькие телефоны
+// маленькие телефоны
 
 @include small-mobile {
   .catalog-heading h1 {
-    font-size: 30px;
+    font-size: 42px;
+  }
+
+  .catalog-eyebrow {
+    font-size: 9px;
+  }
+
+  .catalog-results-heading h2 {
+    font-size: 36px;
+  }
+
+  .featured-content {
+    padding: $spacing-md;
+  }
+
+  .featured-main h3 {
+    font-size: 34px;
+  }
+
+  .featured-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .featured-meta {
+    justify-content: flex-start;
   }
 
   .instruction-card {
     padding: $spacing-md;
+  }
+
+  .catalog-filter-heading {
+    font-size: 9px;
+  }
+
+  .category-filter {
+    min-height: 40px;
+    padding: 7px 10px;
+    font-size: $font-size-xs;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .state-loader {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
