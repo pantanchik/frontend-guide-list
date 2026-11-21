@@ -437,6 +437,13 @@
     color: $text-secondary;
     font-size: $font-size-md;
     line-height: 1.7;
+
+    // ограничение описания
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
   }
 }
 
@@ -662,6 +669,13 @@
   color: $text-secondary;
   font-size: $font-size-sm;
   line-height: 1.7;
+
+  // ограничение описания
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
 }
 
 .card-bottom {
