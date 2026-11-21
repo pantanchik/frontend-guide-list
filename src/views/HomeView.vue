@@ -10,7 +10,7 @@ function goToCatalog() {
   router.push('/instructions')
 }
 
-// сортировка инструкций по популярности
+// cортировка инструкций по популярности
 const popularInstructions = computed(() =>
   [...instructionsStore.instructions].sort((a, b) => b.views_count - a.views_count).slice(0, 8),
 )
@@ -37,14 +37,14 @@ let resumeTimer: ReturnType<typeof setTimeout> | undefined
 // скорость движения в пикселях в секунду
 const carouselSpeed = 32
 
-// при достижении ширины группы отсчёт начинается заново
+// нормализация смещения карусели
 function normalizeOffset(value: number) {
   if (!loopWidth) return 0
 
   return ((value % loopWidth) + loopWidth) % loopWidth
 }
 
-// измеряем ширину группы карточек
+// измеряем ширину первой группы карточек
 function updateLoopWidth() {
   const firstGroup = carouselTrack.value?.firstElementChild as HTMLElement | null
 
@@ -58,14 +58,14 @@ function updateLoopWidth() {
   applyTrackPosition()
 }
 
-// применение смещения
+// применяем смещение
 function applyTrackPosition() {
   if (!carouselTrack.value) return
 
   carouselTrack.value.style.transform = `translate3d(${-offset}px, 0, 0)`
 }
 
-// анимация прокручивания
+// анимация карусели
 function animateCarousel(time: number) {
   if (!previousFrameTime) previousFrameTime = time
 
@@ -80,7 +80,7 @@ function animateCarousel(time: number) {
   animationFrame = requestAnimationFrame(animateCarousel)
 }
 
-// задержка после прокрута пользователем
+// задержка перед возобновлением движения
 function startResumeDelay() {
   if (resumeTimer) clearTimeout(resumeTimer)
 
@@ -91,7 +91,7 @@ function startResumeDelay() {
   }, 300)
 }
 
-// наведение на карточку мышью
+// наведение мыши
 function handlePointerEnter(event: PointerEvent) {
   if (event.pointerType === 'mouse') {
     isHovering.value = true
@@ -116,7 +116,11 @@ function handlePointerDown(event: PointerEvent) {
   hasDragged = false
   isDragging.value = true
 
-  ;(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId)
+  // захват на карточке
+  const target = event.target as HTMLElement
+  const card = target.closest<HTMLElement>('.popular-card')
+
+  card?.setPointerCapture(event.pointerId)
 }
 
 // перетаскивание карусели
@@ -138,7 +142,7 @@ function handlePointerMove(event: PointerEvent) {
   lastPointerX = event.clientX
 }
 
-// конец перетаскивания
+// завершение перетаскивания
 function handlePointerUp(event: PointerEvent) {
   if (activePointerId !== event.pointerId) return
 
@@ -156,17 +160,15 @@ function handlePointerUp(event: PointerEvent) {
   startResumeDelay()
 }
 
-// защита от случайного открытия
-function handleCardClick(event: MouseEvent) {
+// отменяем переход, если пользователь перетаскивал карусель
+function handleCarouselClick(event: MouseEvent) {
   if (suppressClick) {
     event.preventDefault()
-    return
+    event.stopPropagation()
   }
-
-  goToCatalog()
 }
 
-// Загружаем инструкции при открытии главной страницы
+// загружаем инструкции при открытии
 onMounted(async () => {
   if (!instructionsStore.instructions.length && !instructionsStore.isLoading) {
     await instructionsStore.fetchInstructions()
@@ -179,7 +181,7 @@ onMounted(async () => {
   animationFrame = requestAnimationFrame(animateCarousel)
 })
 
-// Если список инструкций изменился, пересчитываем ширину ленты
+// пересчитываем ширину при изменении списка инструкций
 watch(popularInstructions, async () => {
   await nextTick()
   updateLoopWidth()
@@ -197,7 +199,7 @@ onBeforeUnmount(() => {
   <!-- Главный экран -->
   <section class="hero">
     <div class="hero-content">
-      <span class="hero-label"> ПЛАТФОРМА ПОШАГОВЫХ ИНСТРУКЦИЙ </span>
+      <span class="hero-label">ПЛАТФОРМА ПОШАГОВЫХ ИНСТРУКЦИЙ</span>
 
       <h1>
         Любая задача
@@ -320,6 +322,7 @@ onBeforeUnmount(() => {
       @pointermove="handlePointerMove"
       @pointerup="handlePointerUp"
       @pointercancel="handlePointerUp"
+      @click.capture="handleCarouselClick"
     >
       <div ref="carouselTrack" class="popular-track">
         <div
@@ -328,13 +331,16 @@ onBeforeUnmount(() => {
           class="popular-group"
           :aria-hidden="groupIndex !== 1"
         >
-          <button
+          <RouterLink
             v-for="(instruction, index) in popularInstructions"
             :key="`${groupIndex}-${instruction.id}`"
             class="popular-card"
-            type="button"
-            :tabindex="groupIndex === 1 ? 0 : 1"
-            @click="handleCardClick"
+            :to="{
+              name: 'instruction-preview',
+              params: { id: instruction.id },
+            }"
+            :tabindex="groupIndex === 1 ? 0 : -1"
+            draggable="false"
           >
             <span class="popular-card-top">
               <span class="popular-category">{{ instruction.category }}</span>
@@ -354,13 +360,14 @@ onBeforeUnmount(() => {
 
               <span class="popular-views"> {{ instruction.views_count }} просмотров </span>
             </span>
-          </button>
+          </RouterLink>
         </div>
       </div>
     </div>
 
     <div class="popular-footer">
       <span>GUIDE LIST / POPULAR GUIDES</span>
+
       <button class="popular-catalog-link" type="button" @click="goToCatalog">
         Смотреть весь каталог <span>→</span>
       </button>

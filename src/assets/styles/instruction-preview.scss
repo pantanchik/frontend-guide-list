@@ -1,0 +1,452 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+// основная страница
+
+.instruction-preview-page {
+  height: calc(100svh - 89px);
+  min-height: 480px;
+  padding: $spacing-lg;
+
+  overflow: hidden;
+  background: $background;
+  @include paper-texture;
+}
+
+.preview-container {
+  @include container;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.8fr);
+  gap: $spacing-lg;
+
+  height: 100%;
+  min-height: 0;
+}
+
+.preview-description,
+.preview-summary {
+  min-width: 0;
+  min-height: 0;
+  padding: $spacing-xl;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background: $surface-raised;
+}
+
+.preview-description {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-topline,
+.preview-bottomline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.preview-eyebrow,
+.preview-category,
+.preview-bottomline {
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.preview-eyebrow,
+.preview-category {
+  color: $primary;
+}
+
+.preview-category {
+  text-align: right;
+  text-transform: uppercase;
+}
+
+// левая часть
+
+.preview-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  margin: $spacing-2xl 0;
+
+  h1 {
+    max-width: 850px;
+    margin-bottom: $spacing-lg;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -1.5px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.preview-author {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}
+
+.preview-author-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+
+  border: 1px solid $border;
+  border-radius: 50%;
+
+  background: $background;
+  color: $primary;
+
+  font-family: $font-family-display;
+  font-size: 18px;
+}
+
+.preview-description-scroll {
+  min-height: 0;
+  margin-top: $spacing-xl;
+  padding-right: $spacing-md;
+
+  overflow-y: auto;
+
+  p {
+    max-width: 760px;
+    margin: 0;
+
+    color: $text-secondary;
+    font-size: $font-size-md;
+    line-height: 1.9;
+    white-space: pre-line;
+  }
+}
+
+.preview-bottomline {
+  padding-top: $spacing-md;
+  border-top: 1px solid $border;
+  color: $text-secondary;
+}
+
+// правая часть
+
+.preview-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.summary-eyebrow {
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.summary-percentage {
+  margin: $spacing-lg 0;
+
+  color: $primary;
+  font-family: $font-family-display;
+  font-size: clamp(76px, 9vw, 112px);
+  line-height: 0.95;
+
+  span {
+    font-size: 0.48em;
+  }
+}
+
+.summary-progress-track {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  background: $border;
+}
+
+.summary-progress-fill {
+  height: 100%;
+  background: $primary;
+  transition: width 0.3s ease;
+}
+
+.summary-progress-caption {
+  display: flex;
+  justify-content: space-between;
+  margin-top: $spacing-sm;
+
+  color: $text-secondary;
+  font-size: $font-size-xs;
+
+  strong {
+    color: $text;
+    font-family: $font-family-mono;
+    font-weight: 500;
+  }
+}
+
+.summary-divider {
+  height: 1px;
+  margin: $spacing-xl 0;
+  background: $border;
+}
+
+.summary-statistics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.summary-stat-value {
+  color: $text;
+  font-family: $font-family-display;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.summary-stat-label {
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  line-height: 1.4;
+}
+
+.summary-bottom {
+  p {
+    margin-bottom: $spacing-lg;
+
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    line-height: 1.7;
+  }
+}
+
+// кнопки
+
+.preview-start-button,
+.preview-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+
+  width: 100%;
+  min-height: 54px;
+  padding: 12px 18px;
+
+  border: 1px solid $primary;
+  border-radius: $radius-md;
+
+  background: $primary;
+  color: $surface;
+
+  font-family: $font-family;
+  font-size: $font-size-sm;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: $primary-hover;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  span {
+    font-size: 18px;
+  }
+}
+
+.summary-back-link {
+  display: block;
+  margin-top: $spacing-md;
+
+  color: $text-secondary;
+  font-size: $font-size-xs;
+  text-align: center;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+// состояния загрузки и ошибки
+
+.preview-state {
+  @include container;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  text-align: center;
+
+  h1 {
+    margin: $spacing-lg 0 $spacing-sm;
+    font-family: $font-family-display;
+    font-size: 44px;
+    font-weight: 400;
+  }
+
+  p {
+    color: $text-secondary;
+  }
+}
+
+// анимированный индикатор загрузки
+
+.preview-loader {
+  width: 34px;
+  height: 34px;
+  margin-top: $spacing-xl;
+
+  border: 2px solid $border;
+  border-top-color: $primary;
+  border-radius: 50%;
+
+  animation: preview-spin 0.8s linear infinite;
+}
+
+@keyframes preview-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// кнопка возврата в состоянии ошибки
+
+.preview-back-button {
+  max-width: 260px;
+  margin-top: $spacing-lg;
+}
+
+// планшеты
+
+@include tablet {
+  .preview-container {
+    grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.8fr);
+  }
+
+  .preview-description,
+  .preview-summary {
+    padding: $spacing-lg;
+  }
+
+  .preview-main h1 {
+    font-size: clamp(38px, 5vw, 58px);
+  }
+
+  .summary-divider {
+    margin: $spacing-lg 0;
+  }
+}
+
+// телефоны
+
+@include mobile {
+  .instruction-preview-page {
+    height: auto;
+    min-height: calc(100svh - 120px);
+    padding: $spacing-md;
+    overflow: visible;
+  }
+
+  .preview-container {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+    height: auto;
+  }
+
+  .preview-description {
+    min-height: 380px;
+  }
+
+  .preview-main {
+    margin: $spacing-xl 0;
+  }
+
+  .preview-main h1 {
+    font-size: clamp(38px, 10vw, 54px);
+  }
+
+  .preview-description-scroll {
+    max-height: 220px;
+  }
+
+  .preview-summary {
+    gap: $spacing-lg;
+  }
+
+  .summary-percentage {
+    font-size: 76px;
+  }
+
+  .summary-divider {
+    margin: 0;
+  }
+
+  .summary-stat {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary-bottom {
+    margin-top: 0;
+  }
+}
+
+// маленькие экраны
+
+@include small-mobile {
+  .preview-description,
+  .preview-summary {
+    padding: $spacing-md;
+  }
+
+  .preview-topline {
+    align-items: flex-start;
+  }
+
+  .preview-eyebrow,
+  .preview-category {
+    font-size: 9px;
+  }
+
+  .preview-main h1 {
+    font-size: 38px;
+  }
+
+  .summary-stat-value {
+    font-size: 29px;
+  }
+}

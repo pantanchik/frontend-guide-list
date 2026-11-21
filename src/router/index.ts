@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // подключение страниц
 import HomeView from '../views/HomeView.vue'
 import InstructionsView from '../views/InstructionsView.vue'
+import InstructionPreviewView from '../views/InstructionPreviewView.vue'
 
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/instructions',
       name: 'instructions',
       component: InstructionsView,
+    },
+    {
+      path: '/instructions/:id',
+      name: 'instruction-preview',
+      component: InstructionPreviewView,
     },
     {
       path: '/register',

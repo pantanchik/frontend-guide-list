@@ -2,6 +2,8 @@
 import { computed, onMounted, ref } from 'vue'
 import { useInstructionsStore } from '../stores/instructions'
 
+import { getStepsLabel } from '../components/declension'
+
 const store = useInstructionsStore()
 
 const searchQuery = ref('')
@@ -65,26 +67,6 @@ const filteredInstructions = computed(() => {
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   })
 })
-
-// склонение "шаг"
-const getStepsLabel = (count: number): string => {
-  const lastTwoDigits = count % 100
-  const lastDigit = count % 10
-
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-    return 'шагов'
-  }
-
-  if (lastDigit === 1) {
-    return 'шаг'
-  }
-
-  if (lastDigit >= 2 && lastDigit <= 4) {
-    return 'шага'
-  }
-
-  return 'шагов'
-}
 
 // первая инструкция — большая карточка
 const featuredInstruction = computed(() => filteredInstructions.value[0] ?? null)
@@ -254,7 +236,10 @@ async function refreshCatalog() {
         <!-- Есть инструкции -->
         <template v-if="featuredInstruction">
           <!-- Главная карточка -->
-          <article class="featured-card">
+          <RouterLink
+            :to="{ name: 'instruction-preview', params: { id: featuredInstruction.id } }"
+            class="featured-card"
+          >
             <div class="featured-content">
               <div class="featured-top">
                 <span class="featured-category">
@@ -311,13 +296,14 @@ async function refreshCatalog() {
                 </div>
               </div>
             </div>
-          </article>
+          </RouterLink>
 
           <!-- Остальные карточки -->
           <section v-if="remainingInstructions.length" class="instructions-grid">
-            <article
-              v-for="(instruction, index) in remainingInstructions"
+            <RouterLink
+              v-for="instruction in remainingInstructions"
               :key="instruction.id"
+              :to="{ name: 'instruction-preview', params: { id: instruction.id } }"
               class="instruction-card"
             >
               <div class="card-top">
@@ -362,7 +348,7 @@ async function refreshCatalog() {
                   <span>{{ instruction.views_count }} просм.</span>
                 </div>
               </div>
-            </article>
+            </RouterLink>
           </section>
         </template>
 
