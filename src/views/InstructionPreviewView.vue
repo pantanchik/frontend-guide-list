@@ -3,6 +3,8 @@ import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { instructionsApi } from '../api/instructions.api'
+import { useProgressStore } from '../stores/progress'
+
 import type { Instruction } from '../types/instruction'
 
 import { getStepsLabel } from '../components/declension'
@@ -10,19 +12,35 @@ import { getStepsLabel } from '../components/declension'
 const route = useRoute()
 const router = useRouter()
 
+const progress = useProgressStore()
+
 const instruction = ref<Instruction | null>(null)
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
 const stepsCount = computed(() => instruction.value?.steps.length ?? 0)
 
-const percentage = computed(() => {
-  // TODO
-  return 0
+// кол-во выполненных шагов
+const completedSteps = computed(() => {
+  return Math.min(progress.lastCompletedStep, stepsCount.value)
 })
 
+// процент выполнения
+const percentage = computed(() => {
+  if (!stepsCount.value) return 0
+
+  return Math.round((completedSteps.value / stepsCount.value) * 100)
+})
+
+// кол-во оставшихся шагов
 const remainingSteps = computed(() => {
-  return Math.max(stepsCount.value, 0)
+  return Math.max(stepsCount.value - completedSteps.value, 0)
+})
+
+const primaryButtonLabel = computed(() => {
+  if (progress.isCompleted) return 'Инструкция завершена'
+
+  return completedSteps.value > 0 ? 'Продолжить' : 'Приступить'
 })
 
 async function loadInstruction() {
@@ -41,6 +59,9 @@ async function loadInstruction() {
 
   try {
     instruction.value = await instructionsApi.getById(id)
+
+    // загружаем сохранённый прогресс инструкции
+    progress.loadProgress(id, instruction.value.steps.length)
   } catch (err) {
     console.error('Ошибка загрузки инструкции:', err)
     error.value = 'Не удалось загрузить инструкцию. Возможно, она не существует.'
@@ -56,6 +77,19 @@ function startInstruction() {
     name: 'instruction-player',
     params: { id: instruction.value.id },
   })
+}
+
+// инструкция заново
+async function restartInstruction() {
+  if (!instruction.value || completedSteps.value === 0) return
+
+  const confirmed = window.confirm('Начать прохождение заново? Текущий прогресс будет сброшен.')
+
+  if (!confirmed) return
+
+  await progress.resetProgress(instruction.value.id)
+
+  startInstruction()
 }
 
 watch(() => route.params.id, loadInstruction, { immediate: true })
@@ -143,7 +177,7 @@ watch(() => route.params.id, loadInstruction, { immediate: true })
 
           <div class="summary-stat">
             <span class="summary-stat-label">Выполнено</span>
-            <span class="summary-stat-value">0</span>
+            <span class="summary-stat-value">{{ completedSteps }}</span>
           </div>
 
           <div class="summary-stat">
@@ -158,7 +192,7 @@ watch(() => route.params.id, loadInstruction, { immediate: true })
           <p>
             {{
               stepsCount
-                ? `Инструкция состоит из ${stepsCount} ${getStepsLabel(stepsCount, 2)}. Проходи их последовательно в удобном темпе.`
+                ? `Инструкция состоит из ${stepsCount} ${getStepsLabel(stepsCount, 2)}. Проходи их в удобном темпе`
                 : 'В этой инструкции пока нет шагов.'
             }}
           </p>
@@ -166,10 +200,20 @@ watch(() => route.params.id, loadInstruction, { immediate: true })
           <button
             class="preview-start-button"
             type="button"
-            :disabled="stepsCount === 0"
+            :disabled="stepsCount === 0 || progress.isCompleted"
             @click="startInstruction"
           >
-            Приступить
+            {{ primaryButtonLabel }}
+          </button>
+
+          <button
+            class="preview-restart-button"
+            type="button"
+            :disabled="completedSteps === 0"
+            @click="restartInstruction"
+          >
+            <span>↻</span>
+            Пройти заново
           </button>
 
           <RouterLink to="/instructions" class="summary-back-link">

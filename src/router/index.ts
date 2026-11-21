@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import InstructionsView from '../views/InstructionsView.vue'
 import InstructionPreviewView from '../views/InstructionPreviewView.vue'
+import InstructionPassingView from '../views/InstructionPlayerView.vue'
 
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/instructions/:id',
       name: 'instruction-preview',
       component: InstructionPreviewView,
+    },
+    {
+      path: '/instructions/:id/steps',
+      name: 'instruction-player',
+      component: InstructionPassingView,
     },
     {
       path: '/register',

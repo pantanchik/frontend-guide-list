@@ -247,6 +247,7 @@
 // кнопки
 
 .preview-start-button,
+.preview-restart-button,
 .preview-back-button {
   display: flex;
   align-items: center;
@@ -282,6 +283,20 @@
 
   span {
     font-size: 18px;
+  }
+}
+
+.preview-restart-button {
+  gap: $spacing-sm;
+
+  min-height: 48px;
+  margin-top: $spacing-sm;
+
+  background: transparent;
+  color: $primary;
+
+  &:hover:not(:disabled) {
+    background: $background;
   }
 }
 
@@ -367,7 +382,7 @@
   }
 
   .summary-divider {
-    margin: $spacing-lg 0;
+    margin: $spacing-sm 0;
   }
 }
 
