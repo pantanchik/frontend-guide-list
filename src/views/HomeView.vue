@@ -284,9 +284,9 @@ onBeforeUnmount(() => {
   <section class="popular-section">
     <div class="popular-heading">
       <div class="popular-heading-content">
-        <span class="section-label">01 / ЛУЧШЕЕ ЗА ВСЁ ВРЕМЯ</span>
+        <span class="section-label">ЛУЧШЕЕ ЗА ВСЁ ВРЕМЯ</span>
         <h2>Популярные инструкции</h2>
-        <p>Посмотри, какие руководства сейчас изучают чаще всего.</p>
+        <p>Посмотри, какие руководства сейчас изучают чаще всего</p>
       </div>
     </div>
 

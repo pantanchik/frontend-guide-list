@@ -47,19 +47,14 @@ const registrationDate = computed(() => {
     <div class="profile-container">
       <!-- Заголовок -->
       <header class="profile-heading">
-        <div class="profile-heading-top">
-          <span class="profile-label">GUIDE LIST / PERSONAL SPACE</span>
-          <span class="profile-index">ACCOUNT — 001</span>
-        </div>
-
         <div class="profile-title">
           <span class="section-number">01 / PROFILE</span>
 
-          <h1>Ваше <span>пространство.</span></h1>
+          <h1>Ваше <span>пространство</span></h1>
 
           <p>
             Управляйте аккаунтом, просматривайте информацию о себе и продолжайте открывать новые
-            инструкции.
+            инструкции
           </p>
         </div>
       </header>
@@ -96,7 +91,6 @@ const registrationDate = computed(() => {
         <!-- Дополнительная информация -->
         <section class="profile-details">
           <div class="details-heading">
-            <span class="section-number">02 / ACCOUNT DETAILS</span>
             <h2>Данные аккаунта</h2>
           </div>
 
@@ -139,11 +133,11 @@ const registrationDate = computed(() => {
         <!-- Переход к собственным инструкциям -->
         <RouterLink :to="{ name: 'my-instructions' }" class="profile-instructions-link">
           <div class="profile-instructions-info">
-            <span class="section-number">03 / MY COLLECTION</span>
+            <span class="section-number">02 / MY COLLECTION</span>
 
-            <h2>Мои инструкции<span>.</span></h2>
+            <h2>Мои инструкции</h2>
 
-            <p>Просматривайте созданные вами руководства и управляйте собственной коллекцией.</p>
+            <p>Просматривайте созданные вами руководства и управляйте собственной коллекцией</p>
           </div>
 
           <div class="profile-instructions-action">

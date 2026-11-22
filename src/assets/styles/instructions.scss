@@ -13,9 +13,6 @@
 // общий фон верхних секций
 
 .catalog-top-background {
-  width: 100%;
-  padding-top: $spacing-3xl;
-
   border-bottom: 1px solid $border;
 
   background: $background;
@@ -338,7 +335,7 @@
   justify-content: space-between;
   align-items: end;
 
-  margin: $spacing-3xl 0 $spacing-xl;
+  padding: $spacing-2xl 0 $spacing-xl;
 
   h2 {
     margin: $spacing-sm 0 0;
@@ -864,14 +861,10 @@
 // телефоны
 
 @include mobile {
-  .catalog-top-background {
-    padding-top: $spacing-2xl;
-  }
-
   .catalog-intro {
     grid-template-columns: 1fr;
     gap: $spacing-xl;
-    padding-bottom: $spacing-xl;
+    padding: $spacing-xl 0;
   }
 
   .catalog-heading h1 {
@@ -915,6 +908,10 @@
     justify-content: center;
   }
 
+  .catalog-toolbar {
+    padding: $spacing-xl 0;
+  }
+
   .catalog-search-row {
     align-items: stretch;
     flex-direction: column;
@@ -931,10 +928,6 @@
       flex: 1;
       max-width: 220px;
     }
-  }
-
-  .catalog-results-heading {
-    margin-top: $spacing-2xl;
   }
 
   .featured-card {

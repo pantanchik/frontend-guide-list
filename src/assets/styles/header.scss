@@ -179,10 +179,11 @@
   border: 1px solid $border;
 
   background: transparent;
-  color: $text;
+  color: $primary;
 
   &:hover {
     border-color: $primary;
+    color: $primary-hover;
     background: $background;
   }
 }
@@ -206,10 +207,6 @@
 
 .profile-text {
   white-space: nowrap;
-}
-
-.action-arrow {
-  color: $primary;
 }
 
 // выход

@@ -2,8 +2,7 @@
 @use './mixins' as *;
 
 .profile-page {
-  min-height: calc(100vh - 88px);
-  padding: $spacing-3xl 0 $spacing-xl;
+  padding: $spacing-xl 0;
 
   background-color: $background;
   @include paper-texture;
@@ -18,31 +17,10 @@
 // загаловок
 
 .profile-heading {
-  margin-bottom: $spacing-3xl;
-}
-
-.profile-heading-top {
-  display: flex;
-  justify-content: space-between;
-  gap: $spacing-md;
-
-  padding-bottom: $spacing-md;
-  border-bottom: 1px solid $border;
-
-  color: $text-secondary;
-  font-family: $font-family-mono;
-  font-size: 11px;
-  letter-spacing: 0.7px;
-}
-
-.profile-label {
-  color: $primary;
+  margin-bottom: $spacing-2xl;
 }
 
 .profile-title {
-  max-width: 850px;
-  padding-top: $spacing-3xl;
-
   .section-number {
     display: inline-block;
     margin-bottom: $spacing-lg;
@@ -70,7 +48,6 @@
   }
 
   p {
-    max-width: 540px;
     margin: 0;
 
     color: $text-secondary;
@@ -103,7 +80,6 @@
   border-radius: $radius-lg;
 
   background-color: $surface-raised;
-  box-shadow: 5px 5px 0 rgba(31, 27, 24, 0.035);
 }
 
 .card-top {
@@ -212,16 +188,6 @@
 .details-heading {
   margin-bottom: $spacing-xl;
 
-  .section-number {
-    display: inline-block;
-    margin-bottom: $spacing-md;
-
-    color: $primary;
-    font-family: $font-family-mono;
-    font-size: 11px;
-    letter-spacing: 0.7px;
-  }
-
   h2 {
     margin: 0;
 
@@ -276,9 +242,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  grid-column: 1 / -1;
   gap: $spacing-xl;
 
-  margin-top: $spacing-xl;
   padding: $spacing-xl;
 
   border: 1px solid $border;
@@ -401,8 +367,6 @@
   }
 
   .profile-title {
-    padding-top: $spacing-xl;
-
     h1 {
       font-size: 46px;
     }
