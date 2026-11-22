@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 // подключение страниц
 import HomeView from '../views/HomeView.vue'
@@ -49,8 +50,30 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView,
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
+})
+
+// проверка авторизации перед переходом
+router.beforeEach(async (to) => {
+  if (!to.meta.requiresAuth) {
+    return true
+  }
+
+  const authStore = useAuthStore()
+
+  if (!authStore.isInitialized) {
+    await authStore.fetchCurrentUser()
+  }
+
+  if (!authStore.isAuthenticated) {
+    return { name: 'login' }
+  }
+
+  return true
 })
 
 export default router

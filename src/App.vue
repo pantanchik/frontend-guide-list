@@ -7,7 +7,9 @@ const authStore = useAuthStore()
 
 // проверяем авторизацию при запуске
 onMounted(() => {
-  authStore.fetchCurrentUser()
+  if (!authStore.isInitialized) {
+    authStore.fetchCurrentUser()
+  }
 })
 </script>
 

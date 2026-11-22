@@ -1,0 +1,435 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+// ========================================
+// PAGE
+// ========================================
+
+.profile-page {
+  min-height: calc(100vh - 88px);
+  padding: $spacing-3xl 0 $spacing-xl;
+
+  background-color: $background;
+  @include paper-texture;
+}
+
+.profile-container {
+  @include container;
+
+  max-width: 1200px;
+}
+
+// ========================================
+// HEADING
+// ========================================
+
+.profile-heading {
+  margin-bottom: $spacing-3xl;
+}
+
+.profile-heading-top {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-md;
+
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $border;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 11px;
+  letter-spacing: 0.7px;
+}
+
+.profile-label {
+  color: $primary;
+}
+
+.profile-title {
+  max-width: 850px;
+  padding-top: $spacing-3xl;
+
+  .section-number {
+    display: inline-block;
+    margin-bottom: $spacing-lg;
+
+    color: $primary;
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    letter-spacing: 1px;
+  }
+
+  h1 {
+    margin-bottom: $spacing-lg;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(48px, 6vw, 76px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+
+    span {
+      color: $primary;
+      font-style: italic;
+    }
+  }
+
+  p {
+    max-width: 540px;
+    margin: 0;
+
+    color: $text-secondary;
+    font-size: $font-size-md;
+    line-height: 1.8;
+  }
+}
+
+// ========================================
+// CONTENT
+// ========================================
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: $spacing-xl;
+
+  align-items: stretch;
+}
+
+// ========================================
+// MAIN CARD
+// ========================================
+
+.profile-main-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 340px;
+  padding: $spacing-xl;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background-color: $surface-raised;
+  box-shadow: 5px 5px 0 rgba(31, 27, 24, 0.035);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-sm;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.7px;
+}
+
+.card-label {
+  color: $primary;
+}
+
+.profile-user {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+
+  padding: $spacing-2xl 0;
+}
+
+.profile-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 88px;
+  height: 88px;
+
+  border-radius: $radius-md;
+
+  background-color: $primary;
+  color: $surface-raised;
+
+  font-family: $font-family-display;
+  font-size: 42px;
+}
+
+.profile-user-info {
+  min-width: 0;
+
+  .user-role {
+    display: inline-block;
+    margin-bottom: $spacing-xs;
+
+    color: $primary;
+    font-family: $font-family-mono;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin-bottom: $spacing-xs;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0;
+
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    overflow-wrap: anywhere;
+  }
+}
+
+.profile-divider {
+  width: 100%;
+  height: 1px;
+  background-color: $border;
+}
+
+.profile-card-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-sm;
+
+  padding-top: $spacing-lg;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+}
+
+// ========================================
+// ACCOUNT DETAILS
+// ========================================
+
+.profile-details {
+  padding: $spacing-xl;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background-color: $surface;
+}
+
+.details-heading {
+  margin-bottom: $spacing-xl;
+
+  .section-number {
+    display: inline-block;
+    margin-bottom: $spacing-md;
+
+    color: $primary;
+    font-family: $font-family-mono;
+    font-size: 11px;
+    letter-spacing: 0.7px;
+  }
+
+  h2 {
+    margin: 0;
+
+    color: $text;
+    font-family: $font-family-display;
+    font-size: 32px;
+    font-weight: 400;
+  }
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-md;
+
+  padding: $spacing-lg 0;
+
+  border-top: 1px solid $border;
+
+  &:last-child {
+    border-bottom: 1px solid $border;
+  }
+}
+
+.detail-label {
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}
+
+.detail-value {
+  color: $text;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.detail-id {
+  color: $primary;
+  font-family: $font-family-mono;
+}
+
+// ========================================
+// LOADING
+// ========================================
+
+.profile-loading {
+  min-height: 250px;
+  padding: $spacing-2xl;
+
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+
+  background-color: $surface;
+
+  .section-number {
+    color: $primary;
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+  }
+
+  p {
+    margin-top: $spacing-lg;
+    color: $text-secondary;
+  }
+}
+
+// ========================================
+// FOOTER
+// ========================================
+
+.profile-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-md;
+
+  margin-top: $spacing-3xl;
+  padding-top: $spacing-lg;
+
+  border-top: 1px solid $border;
+
+  color: $text-secondary;
+  font-family: $font-family-mono;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+// ========================================
+// TABLET
+// ========================================
+
+@include tablet {
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-main-card {
+    min-height: 280px;
+  }
+}
+
+// ========================================
+// MOBILE
+// ========================================
+
+@include mobile {
+  .profile-page {
+    padding-top: $spacing-xl;
+  }
+
+  .profile-heading {
+    margin-bottom: $spacing-xl;
+  }
+
+  .profile-title {
+    padding-top: $spacing-xl;
+
+    h1 {
+      font-size: 46px;
+    }
+
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .profile-main-card,
+  .profile-details {
+    padding: $spacing-lg;
+  }
+
+  .profile-user {
+    gap: $spacing-md;
+    padding: $spacing-xl 0;
+  }
+
+  .profile-avatar {
+    width: 68px;
+    height: 68px;
+    font-size: 32px;
+  }
+
+  .profile-user-info h2 {
+    font-size: 25px;
+  }
+
+  .details-heading h2 {
+    font-size: 27px;
+  }
+}
+
+// ========================================
+// SMALL MOBILE
+// ========================================
+
+@include small-mobile {
+  .profile-heading-top {
+    font-size: 9px;
+  }
+
+  .profile-title h1 {
+    font-size: 38px;
+  }
+
+  .profile-user {
+    align-items: flex-start;
+  }
+
+  .profile-avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 27px;
+  }
+
+  .profile-user-info h2 {
+    font-size: 21px;
+  }
+
+  .detail-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  .detail-value {
+    text-align: left;
+  }
+
+  .profile-card-footer,
+  .profile-footer {
+    font-size: 8px;
+  }
+}
