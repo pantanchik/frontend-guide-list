@@ -19,6 +19,11 @@ export const authApi = {
     return response.data
   },
 
+  // обновление access-токена
+  async refresh(): Promise<void> {
+    await http.post('/v1/auth/refresh')
+  },
+
   // выход
   async logout(): Promise<void> {
     await http.get('/v1/auth/logout')

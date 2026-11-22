@@ -3,6 +3,7 @@ import { useAuthStore } from '../stores/auth'
 
 // подключение страниц
 import HomeView from '../views/HomeView.vue'
+
 import InstructionsView from '../views/InstructionsView.vue'
 import InstructionPreviewView from '../views/InstructionPreviewView.vue'
 import InstructionPassingView from '../views/InstructionPlayerView.vue'
@@ -10,7 +11,9 @@ import InstructionPassingView from '../views/InstructionPlayerView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProfileView from '../views/ProfileView.vue'
+
 import MyInstructionsView from '../views/MyInstructionsView.vue'
+import InstructionCreateView from '../views/InstructionCreateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +62,14 @@ const router = createRouter({
       path: '/my-instructions',
       name: 'my-instructions',
       component: MyInstructionsView,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/instructions/create',
+      name: 'instruction-create',
+      component: InstructionCreateView,
       meta: {
         requiresAuth: true,
       },
