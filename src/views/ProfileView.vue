@@ -4,12 +4,12 @@ import { useAuthStore } from '../stores/auth'
 
 const authStore = useAuthStore()
 
-// Первая буква имени для аватара
+// первая буква имени для аватара
 const userInitial = computed(() => {
   return authStore.user?.username.trim().charAt(0).toUpperCase() || '?'
 })
 
-// Переводим роль пользователя
+// переводим роль пользователя
 const roleLabel = computed(() => {
   const role = authStore.user?.role.toLowerCase()
 
@@ -22,7 +22,7 @@ const roleLabel = computed(() => {
   return role ? roles[role] || authStore.user?.role : 'Не указана'
 })
 
-// Форматируем дату регистрации
+// форматируем дату регистрации
 const registrationDate = computed(() => {
   const date = authStore.user?.created_at
 
@@ -135,6 +135,21 @@ const registrationDate = computed(() => {
             </div>
           </div>
         </section>
+
+        <!-- Переход к собственным инструкциям -->
+        <RouterLink :to="{ name: 'my-instructions' }" class="profile-instructions-link">
+          <div class="profile-instructions-info">
+            <span class="section-number">03 / MY COLLECTION</span>
+
+            <h2>Мои инструкции<span>.</span></h2>
+
+            <p>Просматривайте созданные вами руководства и управляйте собственной коллекцией.</p>
+          </div>
+
+          <div class="profile-instructions-action">
+            <span>Открыть коллекцию</span>
+          </div>
+        </RouterLink>
       </section>
 
       <!-- Состояние загрузки -->
@@ -142,12 +157,6 @@ const registrationDate = computed(() => {
         <span class="section-number">LOADING / 001</span>
         <p>Загружаем информацию об аккаунте...</p>
       </section>
-
-      <!-- Нижняя часть -->
-      <footer class="profile-footer">
-        <span>GUIDE LIST — YOUR PERSONAL HANDBOOK</span>
-        <span>© 2026</span>
-      </footer>
     </div>
   </main>
 </template>

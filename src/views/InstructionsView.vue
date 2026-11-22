@@ -2,7 +2,9 @@
 import { computed, onMounted, ref } from 'vue'
 import { useInstructionsStore } from '../stores/instructions'
 
-import { getStepsLabel } from '../components/declension'
+import FeaturedInstructionCard from '../components/catalog/FeaturedInstructionCard.vue'
+import InstructionCard from '../components/catalog/InstructionCard.vue'
+import CatalogToolbar from '../components/catalog/CatalogToolbar.vue'
 
 const store = useInstructionsStore()
 
@@ -127,66 +129,13 @@ async function refreshCatalog() {
           </aside>
         </section>
 
-        <!-- Поиск и фильтры -->
-        <section class="catalog-toolbar">
-          <div class="catalog-search-row">
-            <label class="search-box">
-              <span class="visually-hidden">Поиск инструкций</span>
-
-              <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="10.8" cy="10.8" r="6.8" />
-                <path d="m16 16 5 5" />
-              </svg>
-
-              <input
-                v-model="searchQuery"
-                type="search"
-                placeholder="Что хочешь узнать или сделать?"
-              />
-
-              <button
-                v-if="searchQuery"
-                class="search-clear"
-                type="button"
-                aria-label="Очистить поиск"
-                @click="searchQuery = ''"
-              >
-                ×
-              </button>
-            </label>
-
-            <div class="catalog-sort">
-              <label for="catalog-sort">Сортировка</label>
-
-              <select id="catalog-sort" v-model="sortBy">
-                <option value="popular">Популярные</option>
-                <option value="newest">Сначала новые</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="catalog-filter-heading">
-            <span>КАТЕГОРИИ</span>
-            <span>{{ categories.length - 1 }} РАЗДЕЛОВ</span>
-          </div>
-
-          <div class="categories-list">
-            <button
-              v-for="category in categories"
-              :key="category"
-              type="button"
-              class="category-filter"
-              :class="{ active: selectedCategory === category }"
-              :aria-pressed="selectedCategory === category"
-              @click="selectedCategory = category"
-            >
-              <span>{{ category }}</span>
-              <span class="category-count">
-                {{ categoryCounts[category] ?? 0 }}
-              </span>
-            </button>
-          </div>
-        </section>
+        <CatalogToolbar
+          v-model:search-query="searchQuery"
+          v-model:selected-category="selectedCategory"
+          v-model:sort-by="sortBy"
+          :categories="categories"
+          :category-counts="categoryCounts"
+        />
       </div>
     </div>
 
@@ -236,119 +185,15 @@ async function refreshCatalog() {
         <!-- Есть инструкции -->
         <template v-if="featuredInstruction">
           <!-- Главная карточка -->
-          <RouterLink
-            :to="{ name: 'instruction-preview', params: { id: featuredInstruction.id } }"
-            class="featured-card"
-          >
-            <div class="featured-content">
-              <div class="featured-top">
-                <span class="featured-category">
-                  {{ featuredInstruction.category }}
-                </span>
-
-                <span class="featured-number">
-                  № {{ String(featuredInstruction.id).padStart(2, '0') }}
-                </span>
-              </div>
-
-              <div class="featured-main">
-                <h3>{{ featuredInstruction.title }}</h3>
-
-                <p>
-                  {{ featuredInstruction.description || 'Пошаговое руководство для этой задачи.' }}
-                </p>
-              </div>
-
-              <div class="featured-bottom">
-                <div class="featured-author">
-                  <span class="author-mark">
-                    {{ featuredInstruction.author?.username?.charAt(0).toUpperCase() || 'G' }}
-                  </span>
-
-                  <span>
-                    {{ featuredInstruction.author?.username || 'Автор' }}
-                  </span>
-                </div>
-
-                <div class="featured-meta">
-                  <span>{{ featuredInstruction.views_count }} просм.</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="featured-visual">
-              <div class="visual-placeholder">
-                <span class="visual-label">GUIDE</span>
-
-                <div class="visual-steps">
-                  <span class="visual-big-number">
-                    {{ String(featuredInstruction.steps_count).padStart(2, '0') }}
-                  </span>
-
-                  <span class="visual-steps-label">
-                    {{ getStepsLabel(featuredInstruction.steps_count) }}
-                  </span>
-                </div>
-
-                <div class="visual-bottom">
-                  <span>STEP BY STEP</span>
-                  <span>GUIDE LIST</span>
-                </div>
-              </div>
-            </div>
-          </RouterLink>
+          <FeaturedInstructionCard v-if="featuredInstruction" :instruction="featuredInstruction" />
 
           <!-- Остальные карточки -->
           <section v-if="remainingInstructions.length" class="instructions-grid">
-            <RouterLink
+            <InstructionCard
               v-for="instruction in remainingInstructions"
               :key="instruction.id"
-              :to="{ name: 'instruction-preview', params: { id: instruction.id } }"
-              class="instruction-card"
-            >
-              <div class="card-top">
-                <span class="card-category">
-                  {{ instruction.category }}
-                </span>
-
-                <span class="card-number"> № {{ String(instruction.id).padStart(2, '0') }} </span>
-              </div>
-
-              <div class="card-visual">
-                <div class="card-visual-placeholder">
-                  <div class="visual-steps">
-                    <span class="card-visual-big-number">
-                      {{ String(instruction.steps_count).padStart(2, '0') }}
-                    </span>
-
-                    <span class="visual-steps-label">
-                      {{ getStepsLabel(instruction.steps_count) }}
-                    </span>
-                  </div>
-                  <small>GUIDE LIST</small>
-                </div>
-              </div>
-
-              <h3>{{ instruction.title }}</h3>
-
-              <p class="card-description">
-                {{ instruction.description || 'Пошаговое руководство для этой задачи.' }}
-              </p>
-
-              <div class="card-bottom">
-                <div class="card-author">
-                  <span class="author-mark">
-                    {{ instruction.author?.username?.charAt(0).toUpperCase() || 'G' }}
-                  </span>
-
-                  <span>{{ instruction.author?.username || 'Автор' }}</span>
-                </div>
-
-                <div class="card-meta">
-                  <span>{{ instruction.views_count }} просм.</span>
-                </div>
-              </div>
-            </RouterLink>
+              :instruction="instruction"
+            />
           </section>
         </template>
 
@@ -369,4 +214,4 @@ async function refreshCatalog() {
   </main>
 </template>
 
-<style scoped lang="scss" src="../assets/styles/instructions.scss"></style>
+<style lang="scss" src="../assets/styles/instructions.scss"></style>
