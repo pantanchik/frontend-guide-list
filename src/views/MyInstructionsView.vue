@@ -113,7 +113,7 @@ async function refreshInstructions() {
 
             <h1>
               Мои
-              <span>инструкции.</span>
+              <span>инструкции</span>
             </h1>
 
             <p>
@@ -131,11 +131,9 @@ async function refreshInstructions() {
 
             <span class="aside-description"> МОИХ ИНСТРУКЦИЙ </span>
 
-            <div class="aside-decoration">
-              <span>CREATE</span>
-              <span>SHARE</span>
-              <span>IMPROVE</span>
-            </div>
+            <RouterLink to="/instructions/create" class="create-instruction-button">
+              Создать инструкцию
+            </RouterLink>
           </aside>
         </section>
 

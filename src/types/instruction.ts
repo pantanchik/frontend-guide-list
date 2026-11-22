@@ -47,3 +47,28 @@ export interface Instruction {
   updated_at: string
   steps: Step[]
 }
+
+// данные для создания шага
+export interface StepCreateRequest {
+  step_number: number
+  title: string
+  content: string
+  image_url: string | null
+}
+
+// данные для обновления шага
+export interface StepUpdateRequest {
+  step_number?: number
+  title?: string
+  content?: string
+  image_url?: string | null
+}
+
+// данные для создания инструкции
+export interface CreateInstructionRequest {
+  title: string
+  description: string
+  category: string
+  tags: string | null
+  steps: StepCreateRequest[]
+}
